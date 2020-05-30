@@ -66,9 +66,12 @@ public class Loan implements LoanInterface {
 
 	@Override
 	public String toString() {
-		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\t\tDescription" + description + "\n"
-				+ "With: " + getSecondAccount().getName() + " " + getSecondAccount().getSurname() + "\n"
-				+ "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
+
+		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\t\tDescription" + description + "\n";
+		if (getSecondAccount() != null)
+			string += "With: " + getSecondAccount().getName() + " " + getSecondAccount().getSurname() + "\n";
+
+		string += "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
 		for (FinancialInterface e : repaymentInstallments) {
 			string += "ID financial: " + e.getID() + "\t\tDate: "
 					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "

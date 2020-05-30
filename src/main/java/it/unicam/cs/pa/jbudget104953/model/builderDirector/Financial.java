@@ -81,9 +81,12 @@ public class Financial implements FinancialInterface {
 
 	@Override
 	public String toString() {
-		return "ID financial: " + getID() + "\t\tType: " + getTypeMovement() + "\t\tPayment: " + getTypePayment()
-				+ "\t\tDate: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime())) + "\n" + "Amount: "
-				+ getAmount() + "\t\tScheduled: " + getScheduled().toString();
+		String string = "ID financial: " + getID() + "\t\tType: " + getTypeMovement() + "\t\tPayment: "
+				+ getTypePayment() + "\t\tDate: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime()))
+				+ "\n" + "Amount: " + getAmount();
+		if (getScheduled() != null)
+			string += "\t\tScheduled: " + getScheduled().toString();
+		return string;
 	}
 
 	@Override
