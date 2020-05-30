@@ -192,11 +192,11 @@ public class Controller {
 				for (int i = 0; i < numRate; i++) {
 					date.add(GregorianCalendar.WEEK_OF_YEAR, 4);
 					if (initialTransaction.getTypeMovement() == TypeMovement.EXPENSE)
-						DirectorFinancial.getInstance().makeRevenue("", -1 * amount, date, new ArrayList<>(),
-								secondAccount, date);
+						DirectorFinancial.getInstance().makeRevenue("", -1 * amount, (GregorianCalendar) date.clone(),
+								new ArrayList<>(), secondAccount, (GregorianCalendar) date.clone());
 					else
-						DirectorFinancial.getInstance().makeExpense("", -1 * amount, date, new ArrayList<>(),
-								secondAccount, date);
+						DirectorFinancial.getInstance().makeExpense("", -1 * amount, (GregorianCalendar) date.clone(),
+								new ArrayList<>(), secondAccount, (GregorianCalendar) date.clone());
 					add(DirectorFinancial.getInstance().getResult());
 				}
 

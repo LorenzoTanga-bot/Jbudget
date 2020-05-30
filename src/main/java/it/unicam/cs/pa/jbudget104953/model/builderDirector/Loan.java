@@ -59,7 +59,7 @@ public class Loan implements LoanInterface {
 	public double getBalance() {
 		double balance = initialTransaction.getAmount();
 		balance += repaymentInstallments.parallelStream()
-				.filter(x -> x.getScheduled() == null || x.getScheduled().isCompleted()).mapToDouble(x -> x.getAmount())
+				.filter(x -> x.getScheduled() != null && x.getScheduled().isCompleted()).mapToDouble(x -> x.getAmount())
 				.sum();
 		return balance;
 	}
