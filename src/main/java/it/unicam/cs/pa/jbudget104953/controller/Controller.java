@@ -50,11 +50,6 @@ public class Controller {
 		this(new ViewConsole());
 	}
 
-	public static void main(String[] args) {
-		new Controller().start();
-
-	}
-
 	/* GROUP */
 	private void addAccount() {
 		Map<String, String> info = view.addAccount();
