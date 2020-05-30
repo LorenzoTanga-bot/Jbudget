@@ -28,7 +28,7 @@ javafx {
 }
 
 application {
-    mainClassName = 'it.unicam.cs.pa.jbudget104953.controller.Controller'
+    mainClassName = 'it.unicam.cs.pa.jbudget104953.main.index'
 }
 
 test {
