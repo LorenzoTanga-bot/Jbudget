@@ -3,7 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
@@ -32,13 +31,12 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 
 	@Override
 	public boolean makeExpense(String description, double amount, GregorianCalendar date, ArrayList<TagInterface> tag,
-			AccountInterface account, GregorianCalendar scheduled) {
+			GregorianCalendar scheduled) {
 		financialBuilder.reset();
 		financialBuilder.setDescription(description);
 		financialBuilder.setAmount(-1 * Math.abs(amount));
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
-		financialBuilder.setAccount(account);
 		financialBuilder.setScheduled(new Scheduled(scheduled));
 		financialBuilder.setTypeMovement(TypeMovement.EXPENSE);
 		if (scheduled == null)
@@ -50,13 +48,12 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 
 	@Override
 	public boolean makeRevenue(String description, double amount, GregorianCalendar date, ArrayList<TagInterface> tag,
-			AccountInterface account, GregorianCalendar scheduled) {
+			GregorianCalendar scheduled) {
 		financialBuilder.reset();
 		financialBuilder.setDescription(description);
 		financialBuilder.setAmount(amount);
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
-		financialBuilder.setAccount(account);
 		financialBuilder.setScheduled(null);
 		financialBuilder.setTypeMovement(TypeMovement.REVENUE);
 		if (scheduled == null)

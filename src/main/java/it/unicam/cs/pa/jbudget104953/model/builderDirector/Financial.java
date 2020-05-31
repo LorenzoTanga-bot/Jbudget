@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
@@ -16,12 +15,10 @@ public class Financial implements FinancialInterface {
 	private double amount;
 	private GregorianCalendar date;
 	private ArrayList<TagInterface> tag;
-	private AccountInterface account;
 	private ScheduledInterface scheduled;
 
 	public Financial(int ID, String description, TypeMovement typeMovement, TypePayment typePayment, double amount,
-			GregorianCalendar date, ArrayList<TagInterface> tag, AccountInterface account,
-			ScheduledInterface scheduled) {
+			GregorianCalendar date, ArrayList<TagInterface> tag, ScheduledInterface scheduled) {
 
 		this.ID = ID;
 		this.description = description;
@@ -30,7 +27,6 @@ public class Financial implements FinancialInterface {
 		this.amount = amount;
 		this.date = date;
 		this.tag = tag;
-		this.account = account;
 
 	}
 
@@ -70,11 +66,6 @@ public class Financial implements FinancialInterface {
 	}
 
 	@Override
-	public AccountInterface getAccount() {
-		return account;
-	}
-
-	@Override
 	public ScheduledInterface getScheduled() {
 		return scheduled;
 	}
@@ -94,7 +85,6 @@ public class Financial implements FinancialInterface {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ID;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -115,11 +105,6 @@ public class Financial implements FinancialInterface {
 			return false;
 		Financial other = (Financial) obj;
 		if (ID != other.ID)
-			return false;
-		if (account == null) {
-			if (other.account != null)
-				return false;
-		} else if (!account.equals(other.account))
 			return false;
 		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
 			return false;

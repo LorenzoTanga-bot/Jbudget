@@ -2,8 +2,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
-
 /**
  * Questa interfaccia definisce l'ordine delle fasi di costruzione di un
  * prestito. Il direttore funziona con qualsiasi istanza che estende
@@ -31,7 +29,7 @@ public interface DirectorLoanInterface {
 	 * @return true se l'operazione è andata a buon fine
 	 */
 	public boolean makeConsumer(FinancialInterface initialTransaction,
-			ArrayList<FinancialInterface> repaymentInstallments, AccountInterface secondAccount, double ratio);
+			ArrayList<FinancialInterface> repaymentInstallments, double ratio);
 
 	/**
 	 * Costruzione di un prestito per liquidità
@@ -43,7 +41,7 @@ public interface DirectorLoanInterface {
 	 * @return true se l'operazione è andata a buon fine
 	 */
 	public boolean makeLiquid(FinancialInterface initialTransaction,
-			ArrayList<FinancialInterface> repaymentInstallments, AccountInterface secondAccount, double ratio);
+			ArrayList<FinancialInterface> repaymentInstallments, double ratio);
 
 	/**
 	 * resittuisce l'ultimo prestito creato

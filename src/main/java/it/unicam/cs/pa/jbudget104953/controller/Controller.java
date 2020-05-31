@@ -1,23 +1,14 @@
 package it.unicam.cs.pa.jbudget104953.controller;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.Account;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
-import it.unicam.cs.pa.jbudget104953.model.ManagementFinancial;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
-import it.unicam.cs.pa.jbudget104953.model.ManagementLoan;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.DirectorFinancial;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.DirectorLoan;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeManagement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.view.ViewConsole;
 import it.unicam.cs.pa.jbudget104953.view.ViewInterface;
@@ -27,12 +18,11 @@ public class Controller {
 	private final int ACCOUNTNUM = 1;
 	private final int MANAGEMENTNUM = 2;
 	private final int TAGLISNUM = 3;
-	private final int ELEMENTNUM = 4;
 	private Command<Controller> command;
 	private ViewInterface view;
-	private GroupInterface group;
-	private AccountInterface account;
-	private ManagementInterface<?> management;
+	private ControllerGroup groupController;
+	private ControllerAccount accountController;
+	private ControllerManagement managementController;
 
 	private boolean status;
 	private boolean sync;
@@ -65,160 +55,43 @@ public class Controller {
 		int id = view.getID();
 		AccountInterface account = null;
 		if ((account = group.getAccount(id)) != null) {
-			this.account = account;
+			accountController.setAccount(account);
 			this.feedback = ACCOUNTNUM;
 		}
 	}
 
 	/* ACCOUNT */
 	private void addManagement() {
-		Map<String, String> info = view.addManagement();
-		switch (info.get("Type")) {
-			case "FINANCIAL":
-				switch (info.get("Shared")) {
-					case "Y":
-						this.account.addManagement(TypeManagement.SHARED,
-								new ManagementFinancial(info.get("Description")));
-						break;
-					case "N":
-						this.account.addManagement(TypeManagement.UNSHARED,
-								new ManagementFinancial(info.get("Description")));
-						break;
-				}
-				break;
+		accountController.addManagement(view.addManagement());
 
-			case "LOAN":
-				switch (info.get("Shared")) {
-					case "Y":
-						this.account.addManagement(TypeManagement.SHARED, new ManagementLoan(info.get("Description")));
-						break;
-					case "N":
-						this.account.addManagement(TypeManagement.UNSHARED,
-								new ManagementLoan(info.get("Description")));
-						break;
-				}
-				break;
-
-		}
 	}
 
 	private void removeManagement() {
-		int id = view.getID();
-		account.removeManagement(account.getManagement(id));
+		accountController.removeManagement(view.getID());
 	}
 
 	private void viewManagement() {
-		int id = view.getID();
 		ManagementInterface<?> management = null;
-		if ((management = account.getManagement(id)) != null) {
-			this.management = management;
+		if ((management = accountController.getManagement(view.getID())) != null) {
+			managementController.setManagement(management);
 			this.feedback = MANAGEMENTNUM;
 		}
 	}
 
 	/* MANAGEMENT */
-	private FinancialInterface newFinancial(Map<String, String> map) {
-		String description = map.get("Description");
-		double amount = Double.parseDouble(map.get("Amount"));
-		ArrayList<TagInterface> tagArray = new ArrayList<>() {
-
-			private static final long serialVersionUID = 1L;
-
-			{
-				if (map.get("Tag") != null)
-					for (String tag : map.get("Tag").split(","))
-						add(TagList.getInstance().getTag(tag));
-			}
-		};
-
-		String[] scheduled = null;
-		if (map.get("DateScheduled") != null)
-			scheduled = map.get("DateScheduled").split("/");
-
-		switch (map.get("TypeMovement")) {
-			case "EXPENSE":
-				if (map.get("DateScheduled") != null)
-					DirectorFinancial.getInstance().makeExpense(description, amount, new GregorianCalendar(), tagArray,
-							account, new GregorianCalendar(Integer.parseInt(scheduled[2]),
-									Integer.parseInt(scheduled[1]), Integer.parseInt(scheduled[0])));
-				else
-					DirectorFinancial.getInstance().makeExpense(description, amount, new GregorianCalendar(), tagArray,
-							account, null);
-				break;
-
-			case "REVENUE":
-				if (map.get("DateScheduled") != null)
-					DirectorFinancial.getInstance().makeRevenue(description, amount, new GregorianCalendar(), tagArray,
-							account, new GregorianCalendar(Integer.parseInt(scheduled[2]),
-									Integer.parseInt(scheduled[1]), Integer.parseInt(scheduled[0])));
-				else
-					DirectorFinancial.getInstance().makeRevenue(description, amount, new GregorianCalendar(), tagArray,
-							account, null);
-				break;
-		}
-		return DirectorFinancial.getInstance().getResult();
-	}
-
-	private void addFinancial() {
-		Map<String, String> map = view.newFinancial();
-		management.addElement(newFinancial(map));
-	}
-
-	private void addLoan() {
-		Map<String, String> map = view.newLoan();
-		FinancialInterface initialTransaction = newFinancial(map);
-		double ratio = Double.parseDouble(map.get("Ratio"));
-		int numRate = Integer.parseInt(map.get("NumberRate"));
-		double amount = (initialTransaction.getAmount() / numRate)
-				+ ((initialTransaction.getAmount() / numRate) * ratio / 100);
-
-		AccountInterface secondAccount;
-		if (map.get("SecondAccount") != null)
-			secondAccount = group.getAccount(Integer.parseInt(map.get("SecondAccount")));
+	private void addElement() {
+		if (managementController.getType().equals("FINANCIAL"))
+			managementController.addElement(view.newFinancial());
 		else
-			secondAccount = null;
-
-		ArrayList<FinancialInterface> repaymentInstallments = new ArrayList<>() {
-
-			private static final long serialVersionUID = 1L;
-
-			{
-				GregorianCalendar date = (GregorianCalendar) initialTransaction.getDate().clone();
-				for (int i = 0; i < numRate; i++) {
-					date.add(GregorianCalendar.WEEK_OF_YEAR, 4);
-					if (initialTransaction.getTypeMovement() == TypeMovement.EXPENSE)
-						DirectorFinancial.getInstance().makeRevenue("", -1 * amount, (GregorianCalendar) date.clone(),
-								new ArrayList<>(), secondAccount, (GregorianCalendar) date.clone());
-					else
-						DirectorFinancial.getInstance().makeExpense("", -1 * amount, (GregorianCalendar) date.clone(),
-								new ArrayList<>(), secondAccount, (GregorianCalendar) date.clone());
-					add(DirectorFinancial.getInstance().getResult());
-				}
-
-			}
-		};
-
-		switch (map.get("Scope")) {
-			case "LIQUID":
-				DirectorLoan.getInstance().makeLiquid(initialTransaction, repaymentInstallments, secondAccount, ratio);
-				break;
-			case "CONSUMER":
-				DirectorLoan.getInstance().makeConsumer(initialTransaction, repaymentInstallments, secondAccount,
-						ratio);
-				break;
-		}
-		management.addElement(DirectorLoan.getInstance().getResult());
-
+			managementController.addElement(view.newLoan());
 	}
 
 	private void removeElement() {
-		int id = view.getID();
-		management.removeElement(id);
+		managementController.removeElement(view.getID());
 	}
 
 	private void viewElement() {
-		int ID = view.getID();
-		view.viewElement(management.getElement(ID));
+		view.viewElement(managementController.getElement(view.getID()));
 	}
 
 	/* TAG */
@@ -246,15 +119,7 @@ public class Controller {
 		command.addCommand("ADD MANAGEMENT", Controller::addManagement);
 		command.addCommand("REMOVE MANAGEMENT", Controller::removeManagement);
 		command.addCommand("VIEW MANAGEMENT", Controller::viewManagement);
-		command.addCommand("ADD ELEMENT", Controller -> {
-			switch (management.getType()) {
-				case "FINANCIAL":
-					addFinancial();
-					break;
-				case "LOAN":
-					addLoan();
-			}
-		});
+		command.addCommand("ADD ELEMENT", Controller::addElement);
 		command.addCommand("REMOVE ELEMENT", Controller::removeElement);
 		command.addCommand("VIEW ELEMENT", Controller::viewElement);
 		command.addCommand("SHOW ELEMENT", Controller -> this.feedback = TAGLISNUM);
@@ -263,7 +128,7 @@ public class Controller {
 		command.addCommand("GO BACK", Controller -> {
 			{
 				if (feedback == TAGLISNUM)
-					feedback -= 2;
+					feedback = MANAGEMENTNUM;
 				else
 					feedback--;
 			}
@@ -275,24 +140,21 @@ public class Controller {
 		String command = "";
 		view.hello();
 		if (!sync) {
-			this.group = new Group();
-			this.group.subscribe(view);
+			GroupInterface group = new Group();
+			group.subscribe(view);
+			groupController.setGroup(group);
 		}
 		addCommands();
 		while (status) {
 			switch (feedback) {
 				case GROUPNUM:
-					command = view.menuGroup(group);
+					command = view.menuGroup(groupController.getGroup());
 					break;
 				case ACCOUNTNUM:
-					command = view.menuAccount(account);
+					command = view.menuAccount(accountController.getAccount());
 					break;
 				case MANAGEMENTNUM:
-					command = view.menuManagement(management);
-
-					break;
-				case ELEMENTNUM:
-					// commandsElemets.get(key).run();
+					command = view.menuManagement(managementController.getManagement());
 					break;
 				case TAGLISNUM:
 					command = view.menuTagList();

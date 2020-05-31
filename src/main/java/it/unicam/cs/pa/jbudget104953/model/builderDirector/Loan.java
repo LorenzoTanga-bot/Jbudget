@@ -3,7 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 public class Loan implements LoanInterface {
@@ -11,16 +10,14 @@ public class Loan implements LoanInterface {
 	private String description;
 	private FinancialInterface initialTransaction;
 	private ArrayList<FinancialInterface> repaymentInstallments;
-	private AccountInterface secondAccount;
 	private TypeScope typeScope;
 	private double ratio;
 
 	public Loan(int ID, FinancialInterface initialTransaction, ArrayList<FinancialInterface> repaymentInstallments,
-			AccountInterface secondAccount, TypeScope typeScope, double ratio) {
+			TypeScope typeScope, double ratio) {
 		this.ID = ID;
 		this.initialTransaction = initialTransaction;
 		this.repaymentInstallments = repaymentInstallments;
-		this.secondAccount = secondAccount;
 		this.typeScope = typeScope;
 		this.ratio = ratio;
 	}
@@ -38,11 +35,6 @@ public class Loan implements LoanInterface {
 	@Override
 	public ArrayList<FinancialInterface> getRepaymentInstallments() {
 		return repaymentInstallments;
-	}
-
-	@Override
-	public AccountInterface getSecondAccount() {
-		return secondAccount;
 	}
 
 	@Override
@@ -67,11 +59,8 @@ public class Loan implements LoanInterface {
 	@Override
 	public String toString() {
 
-		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\t\tDescription" + description + "\n";
-		if (getSecondAccount() != null)
-			string += "With: " + getSecondAccount().getName() + " " + getSecondAccount().getSurname() + "\n";
-
-		string += "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
+		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\t\tDescription" + description + "\n"
+				+ "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
 		for (FinancialInterface e : repaymentInstallments) {
 			string += "ID financial: " + e.getID() + "\t\tDate: "
 					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
@@ -88,7 +77,6 @@ public class Loan implements LoanInterface {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((initialTransaction == null) ? 0 : initialTransaction.hashCode());
 		result = prime * result + ((repaymentInstallments == null) ? 0 : repaymentInstallments.hashCode());
-		result = prime * result + ((secondAccount == null) ? 0 : secondAccount.hashCode());
 		result = prime * result + ((typeScope == null) ? 0 : typeScope.hashCode());
 		return result;
 	}
@@ -116,11 +104,6 @@ public class Loan implements LoanInterface {
 			if (other.repaymentInstallments != null)
 				return false;
 		} else if (!repaymentInstallments.equals(other.repaymentInstallments))
-			return false;
-		if (secondAccount == null) {
-			if (other.secondAccount != null)
-				return false;
-		} else if (!secondAccount.equals(other.secondAccount))
 			return false;
 		if (typeScope != other.typeScope)
 			return false;

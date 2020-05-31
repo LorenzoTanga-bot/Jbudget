@@ -3,7 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
@@ -16,7 +15,6 @@ public class BuilderFinancial implements BuilderFinancialInterface {
 	private double amount;
 	private GregorianCalendar date;
 	private ArrayList<TagInterface> tag;
-	private AccountInterface account;
 	private ScheduledInterface scheduled;
 
 	public BuilderFinancial() {
@@ -31,7 +29,6 @@ public class BuilderFinancial implements BuilderFinancialInterface {
 		amount = 0;
 		date = null;
 		tag = null;
-		account = null;
 		scheduled = null;
 
 		return true;
@@ -84,12 +81,6 @@ public class BuilderFinancial implements BuilderFinancialInterface {
 	}
 
 	@Override
-	public boolean setAccount(AccountInterface account) {
-		this.account = account;
-		return true;
-	}
-
-	@Override
 	public boolean setScheduled(ScheduledInterface scheduled) {
 		this.scheduled = scheduled;
 		return true;
@@ -99,7 +90,7 @@ public class BuilderFinancial implements BuilderFinancialInterface {
 	public FinancialInterface getResult() {
 		try {
 			return new Financial(IDFinancial.getInstance().getID(), description, typeMovement, typePayment, amount,
-					date, tag, account, scheduled);
+					date, tag, scheduled);
 		} catch (Exception e) {
 			return null;
 		}

@@ -3,8 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
-
 /**
  * Questa interfaccia definisce l'ordine delle fasi di costruzione di un
  * movimento. Il direttore funziona con qualsiasi istanza che estende
@@ -33,7 +31,7 @@ public interface DirectorFinancialInterface {
 	 * @return true se l'operazione è andata a buon fine
 	 */
 	public boolean makeExpense(String description, double amount, GregorianCalendar date, ArrayList<TagInterface> tag,
-			AccountInterface account, GregorianCalendar scheduled);
+			GregorianCalendar scheduled);
 
 	/**
 	 * costruzione di un introito
@@ -47,7 +45,7 @@ public interface DirectorFinancialInterface {
 	 * @return true se l'operazione è andata a buon fine
 	 */
 	public boolean makeRevenue(String description, double amount, GregorianCalendar date, ArrayList<TagInterface> tag,
-			AccountInterface account, GregorianCalendar scheduled);
+			GregorianCalendar scheduled);
 
 	/**
 	 * restituisce l'ultimo moviemento creato

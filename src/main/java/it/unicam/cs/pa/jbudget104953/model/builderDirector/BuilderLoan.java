@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDLoan;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
@@ -10,7 +9,6 @@ public class BuilderLoan implements BuilderLoanInterface {
 
 	private FinancialInterface initialTransaction;
 	private ArrayList<FinancialInterface> repaymentInstallments;
-	private AccountInterface secondAccount;
 	private TypeScope typeScope;
 	private double ratio;
 
@@ -22,7 +20,6 @@ public class BuilderLoan implements BuilderLoanInterface {
 	public boolean reset() {
 		initialTransaction = null;
 		repaymentInstallments = null;
-		secondAccount = null;
 		typeScope = null;
 
 		return true;
@@ -45,12 +42,6 @@ public class BuilderLoan implements BuilderLoanInterface {
 	}
 
 	@Override
-	public boolean setSecondAccount(AccountInterface secondAccount) {
-		this.secondAccount = secondAccount;
-		return true;
-	}
-
-	@Override
 	public boolean setTypeScope(TypeScope typeScope) {
 		if (initialTransaction == null)
 			throw new NullPointerException();
@@ -67,8 +58,7 @@ public class BuilderLoan implements BuilderLoanInterface {
 	@Override
 	public LoanInterface getResutl() {
 		try {
-			return new Loan(IDLoan.getInstance().getID(), initialTransaction, repaymentInstallments, secondAccount,
-					typeScope, ratio);
+			return new Loan(IDLoan.getInstance().getID(), initialTransaction, repaymentInstallments, typeScope, ratio);
 		} catch (Exception e) {
 			return null;
 		}

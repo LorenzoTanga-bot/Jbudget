@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 /**
@@ -39,14 +38,6 @@ public interface BuilderLoanInterface {
       * @return true se l'operazione è andata a buon fine
       */
      public boolean setRepaymentInstallments(ArrayList<FinancialInterface> repaymentInstallments);
-
-     /**
-      * set dell'account con cui è condivisa la tansazione
-      * 
-      * @param secondAccount account con cui è condivisa la tansazione
-      * @return true se l'operazione è andata a buon fine
-      */
-     public boolean setSecondAccount(AccountInterface secondAccount);
 
      /**
       * set scopo della transazione

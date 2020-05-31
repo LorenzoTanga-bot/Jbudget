@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 /**
@@ -32,13 +31,6 @@ public interface LoanInterface extends Comparable<LoanInterface> {
 	 * @return rate del rimborso
 	 */
 	public ArrayList<FinancialInterface> getRepaymentInstallments();
-
-	/**
-	 * restituisce l'account con cui si condivide la transazione
-	 * 
-	 * @return account con cui si condivide la transazione
-	 */
-	public AccountInterface getSecondAccount();
 
 	/**
 	 * restituisce lo scopo della transazione (Consumer goods o Liquid assets)

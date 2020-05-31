@@ -3,7 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
@@ -81,16 +80,6 @@ public interface BuilderFinancialInterface {
       */
 
      public boolean setTag(ArrayList<TagInterface> tag);
-
-     /**
-      * set di Account
-      * 
-      * @param account account della persona che ha eseguito la transazione
-      * @throws NullPointerException se il parametro passato è nil
-      * @return true se l'operazione è andata a buon fine
-      */
-
-     public boolean setAccount(AccountInterface account);
 
      /**
       * set di Scheduled

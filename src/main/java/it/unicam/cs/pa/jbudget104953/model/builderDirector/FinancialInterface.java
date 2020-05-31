@@ -3,7 +3,6 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
@@ -62,13 +61,6 @@ public interface FinancialInterface extends Comparable<FinancialInterface> {
 	 * @return tag associati
 	 */
 	public ArrayList<TagInterface> getTag();
-
-	/**
-	 * retituisci l'account che ha creato la transazione
-	 * 
-	 * @return account
-	 */
-	public AccountInterface getAccount();
 
 	/**
 	 * restituisce la data di quando verrà contabilizzata la transazione
