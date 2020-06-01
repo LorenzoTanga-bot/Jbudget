@@ -1,7 +1,7 @@
 package it.unicam.cs.pa.jbudget104953.main;
 
 import it.unicam.cs.pa.jbudget104953.controller.Controller;
-import it.unicam.cs.pa.jbudget104953.controller.JavaFXView;
+import it.unicam.cs.pa.jbudget104953.FXController.JavaFXView;
 import javafx.application.Application;
 
 public class index {

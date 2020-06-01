@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane ?>
 <?import javafx.scene.text.Font ?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.controller.FXGroup">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.FXGroup">
    <top>
       <Label fx:id="console" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="550.0" style="-fx-background-color: #624370;" text="Label" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
@@ -22,12 +22,12 @@
    <bottom>
       <AnchorPane fx:id="GroupMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addAccount" layoutX="96.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="ADD ACCOUNT">
+            <Button fx:id="addAccount" layoutX="96.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="ADD ACCOUNT" onAction="#addAccount">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="removeAccount" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="REMOVE ACCOUNT">
+            <Button fx:id="removeAccount" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="REMOVE ACCOUNT" onAction="#removeAccount">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
@@ -40,11 +40,4 @@
          </children>
       </AnchorPane>
    </bottom>
-   <center>
-      <TextField promptText="&gt;" style="-fx-background-color: #624370 #624370;" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets left="10.0" right="10.0" />
-         </BorderPane.margin>
-      </TextField>
-   </center>
 </BorderPane>

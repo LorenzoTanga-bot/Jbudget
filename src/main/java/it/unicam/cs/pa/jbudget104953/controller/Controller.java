@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget104953.controller;
 
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.model.Account;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
@@ -34,6 +33,10 @@ public class Controller {
 		sync = false;
 		feedback = GROUPNUM;
 		command = new Command<>(this);
+
+		groupController = new ControllerGroup();
+		accountController = new ControllerAccount();
+		managementController = new ControllerManagement();
 	}
 
 	public Controller() {
@@ -42,19 +45,16 @@ public class Controller {
 
 	/* GROUP */
 	private void addAccount() {
-		Map<String, String> info = view.addAccount();
-		group.addAccount(new Account(info.get("Name"), info.get("Surname"), info.get("Description")));
+		groupController.addAccount(view.addAccount());
 	}
 
 	private void removeAccount() {
-		int id = view.getID();
-		group.getAccounts().removeIf(x -> x.getID() == id);
+		groupController.removeAccount(view.getID());
 	}
 
 	private void viewAccount() {
-		int id = view.getID();
 		AccountInterface account = null;
-		if ((account = group.getAccount(id)) != null) {
+		if ((account = groupController.getAccount(view.getID())) != null) {
 			accountController.setAccount(account);
 			this.feedback = ACCOUNTNUM;
 		}
