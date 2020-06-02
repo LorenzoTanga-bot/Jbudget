@@ -63,4 +63,8 @@ public class ControllerAccount {
     public ManagementInterface<?> getManagement(int ID) {
         return account.getManagement(ID);
     }
+
+    public String toString() {
+        return account.toString();
+    }
 }

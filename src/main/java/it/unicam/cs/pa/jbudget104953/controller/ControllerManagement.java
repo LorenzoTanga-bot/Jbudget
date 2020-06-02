@@ -132,4 +132,8 @@ public class ControllerManagement {
         return management.getElement(ID);
     }
 
+    public String toString() {
+        return management.toString();
+    }
+
 }

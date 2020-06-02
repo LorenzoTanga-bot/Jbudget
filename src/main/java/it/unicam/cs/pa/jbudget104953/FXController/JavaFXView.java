@@ -3,6 +3,7 @@ package it.unicam.cs.pa.jbudget104953.FXController;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.unicam.cs.pa.jbudget104953.FXController.Group.FXGroup;
 import it.unicam.cs.pa.jbudget104953.controller.ControllerGroup;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;

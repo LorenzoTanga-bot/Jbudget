@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField ?>
 <?import javafx.scene.layout.AnchorPane ?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.FXremoveAccount">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.Group.FXremoveAccount">
    <children>
       <Button layoutX="273.0" layoutY="228.0" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #624370;" text="REMOVE" textFill="WHITE" />
       <TextField fx:id="idField" layoutX="235.0" layoutY="164.0" style="-fx-background-color: #624370;" />

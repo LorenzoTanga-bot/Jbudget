@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane ?>
 <?import javafx.scene.text.Font ?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.FXGroup">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.Group.FXGroup">
    <top>
       <Label fx:id="console" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="550.0" style="-fx-background-color: #624370;" text="Label" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
@@ -22,17 +22,17 @@
    <bottom>
       <AnchorPane fx:id="GroupMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addAccount" layoutX="96.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="ADD ACCOUNT" onAction="#addAccount">
+            <Button fx:id="addAccount" layoutX="96.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="ADD ACCOUNT" onAction="#addAccount" textFill="WHITE">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="removeAccount" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="REMOVE ACCOUNT" onAction="#removeAccount">
+            <Button fx:id="removeAccount" layoutX="236.0" layoutY="88.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="REMOVE ACCOUNT" onAction="#removeAccount" textFill="WHITE">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="viewAccount" layoutX="399.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="VIEW ACCOUNT">
+            <Button fx:id="viewAccount" layoutX="399.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="VIEW ACCOUNT" onAction="#viewAccount" textFill="WHITE">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
