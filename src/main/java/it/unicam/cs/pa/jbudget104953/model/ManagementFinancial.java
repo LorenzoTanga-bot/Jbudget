@@ -20,6 +20,7 @@ public class ManagementFinancial implements ManagementInterface<FinancialInterfa
 
 	public ManagementFinancial(int ID, ArrayList<FinancialInterface> financialArray, String description) {
 		this.ID = ID;
+		this.description = description;
 		this.financialArray = financialArray;
 		EventManager.getInstance("ELEMENTS");
 		balance = 0;

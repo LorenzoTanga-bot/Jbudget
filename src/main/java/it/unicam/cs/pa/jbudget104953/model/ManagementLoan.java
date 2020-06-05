@@ -103,7 +103,7 @@ public class ManagementLoan implements ManagementInterface<LoanInterface> {
 	@Override
 	public LoanInterface getElement(int id) {
 		for (LoanInterface e : loanArray) {
-			if (e.getID() == ID)
+			if (e.getID() == id)
 				return e;
 		}
 		return null;

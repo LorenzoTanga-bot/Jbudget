@@ -1,6 +1,7 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -11,8 +12,7 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONTokener;
 
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Financial;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
@@ -57,8 +57,8 @@ public class Sync {
         int ID = jsonFinancial.getInt("ID");
         String description = jsonFinancial.getString("Description");
         double amount = jsonFinancial.getDouble("Amount");
-        TypeMovement typeMovement = (TypeMovement) jsonFinancial.get("TypeMovement");
-        TypePayment typePayment = (TypePayment) jsonFinancial.get("TypePayment");
+        TypeMovement typeMovement = TypeMovement.valueOf(jsonFinancial.getString("TypeMovement"));
+        TypePayment typePayment = TypePayment.valueOf(jsonFinancial.getString("TypePayment"));
         String[] date = jsonFinancial.getString("Date").split("-");
         String[] scheduled = jsonFinancial.getString("Scheduled").split("-");
 
@@ -72,6 +72,10 @@ public class Sync {
                 }
             }
         };
+
+        if (scheduled[0].equals("null"))
+            return new Financial(ID, description, typeMovement, typePayment, amount, new GregorianCalendar(
+                    Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])), tagList, null);
 
         return new Financial(ID, description, typeMovement, typePayment, amount,
                 new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])),
@@ -92,14 +96,14 @@ public class Sync {
 
         jsonLoan.put("RepaymentInstallments", jsonElementArray);
 
-        return null;
+        return jsonLoan;
     }
 
     private LoanInterface readLoan(JSONObject jsonLoan) {
         int ID = jsonLoan.getInt("ID");
-        TypeScope scope = (TypeScope) jsonLoan.get("TypeScope");
+        TypeScope scope = TypeScope.valueOf(jsonLoan.getString("TypeScope"));
         double ratio = jsonLoan.getDouble("Ratio");
-        FinancialInterface initialTransaction = readFinancial(jsonLoan.getJSONObject("key"));
+        FinancialInterface initialTransaction = readFinancial(jsonLoan.getJSONObject("InitialTransaction"));
 
         JSONArray jsonFinancilArray = jsonLoan.getJSONArray("RepaymentInstallments");
         ArrayList<FinancialInterface> repaymentInstallments = new ArrayList<>() {
@@ -175,7 +179,7 @@ public class Sync {
         jsonAccount.put("ID", account.getID());
         jsonAccount.put("Name", account.getName());
         jsonAccount.put("Surname", account.getSurname());
-        jsonAccount.put("Descriptio", account.getDescription());
+        jsonAccount.put("Description", account.getDescription());
 
         JSONArray jsonManagementArray = new JSONArray();
         for (ManagementInterface<?> management : account.getManagement(TypeManagement.SHARED))
@@ -247,12 +251,16 @@ public class Sync {
         return new Group(ID, accountArray);
     }
 
-    public void write(GroupInterface group, FileWriter file) throws IOException {
+    public void write(GroupInterface group, String path) throws IOException {
+        FileWriter file = new FileWriter(path);
         file.write(writeGroup(group).toString());
+        file.close();
     }
 
-    public GroupInterface read(FileReader file) throws IOException, ParseException {
-        return readGroup(((JSONObject) new JSONParser().parse(file)));
+    public GroupInterface read(String path) throws IOException {
+        File file = new File(path);
+        JSONTokener tokener = new JSONTokener(new FileInputStream(file));
+        return readGroup(new JSONObject(tokener));
     }
 
 }

@@ -1,6 +1,5 @@
 package it.unicam.cs.pa.jbudget104953.controller;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -27,13 +26,11 @@ public class Controller {
 	private ControllerManagement managementController;
 
 	private boolean status;
-	private boolean sync;
 	private int feedback;
 
 	public Controller(ViewInterface view) {
 		this.view = view;
 		status = true;
-		sync = false;
 		feedback = GROUPNUM;
 		command = new Command<>(this);
 
@@ -41,7 +38,17 @@ public class Controller {
 		accountController = new ControllerAccount();
 		managementController = new ControllerManagement();
 
-		// TODO try read/write file JSON
+		GroupInterface group;
+
+		try {
+			group = new Sync().read("sync.json");
+		} catch (Exception e) {
+			System.out.println(e);
+			group = new Group();
+		}
+
+		group.subscribe(view);
+		groupController.setGroup(group);
 	}
 
 	public Controller() {
@@ -120,11 +127,8 @@ public class Controller {
 	private void sync() {
 		Sync sync = new Sync();
 
-		FileWriter file;
 		try {
-			file = new FileWriter("output.json");
-			sync.write(groupController.getGroup(), file);
-			file.close();
+			sync.write(groupController.getGroup(), "sync.json");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -159,11 +163,6 @@ public class Controller {
 	public void start() {
 		String command = "";
 		view.hello();
-		if (!sync) {
-			GroupInterface group = new Group();
-			group.subscribe(view);
-			groupController.setGroup(group);
-		}
 		addCommands();
 		while (status) {
 			switch (feedback) {

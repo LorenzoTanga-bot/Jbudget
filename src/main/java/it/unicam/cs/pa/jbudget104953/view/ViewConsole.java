@@ -168,19 +168,12 @@ public class ViewConsole implements ViewInterface {
 		info.put("Amount", String.valueOf(readNum()));
 		out.print("DESCRIPTION");
 		info.put("Description", readString());
-		info.put("Tag", null);
+		info.put("Tag", "");
 		info.put("DataScheduled", null);
 
 		out.print("NUMBER OF RATE");
 		info.put("NumberRate", String.valueOf((int) readNum()));
-		out.print("Second Account:\nID|SKIP");
-		String string = readString().toUpperCase();
-		try {
-			info.put("SecondAccount", String.valueOf(Integer.parseInt(string)));
-		} catch (NumberFormatException e) {
-			if (string.equals("SKIP"))
-				info.put("SecondAccount", null);
-		}
+
 		out.print("SCOPE\nLIQUID | CONSUMER");
 		info.put("Scope", readString().toUpperCase());
 		out.print("RATIO");
