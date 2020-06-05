@@ -1,0 +1,34 @@
+{
+  "Account": [
+    {
+      "ManagementUnshared": [
+        {
+          "Type": "FINANCIAL",
+          "Element": [
+            {
+              "Scheduled": "null",
+              "TypePayment": "DEBIT",
+              "Description": "nil",
+              "Amount": -10,
+              "TypeMovement": "EXPENSE",
+              "ID": 0,
+              "Tag": [],
+              "Date": "04-06-2020"
+            }
+          ],
+          "ID": 0,
+          "Balance": -10
+        }
+      ],
+      "ManagementShared": [],
+      "Description": "nil",
+      "BalanceInside": -10,
+      "ID": 0,
+      "Surname": "tanganelli",
+      "Name": "lorenzo",
+      "BalanceOutSide": 0
+    }
+  ],
+  "ID": 1,
+  "Balance": 0
+}

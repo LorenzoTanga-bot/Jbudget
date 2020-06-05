@@ -45,9 +45,9 @@ public class ControllerManagement {
             private static final long serialVersionUID = 1L;
 
             {
-                if (info.get("Tag") != null)
+                if (!info.get("Tag").equals(""))
                     for (String tag : info.get("Tag").split(","))
-                        add(TagList.getInstance().getTag(tag));
+                        add(TagList.getInstance().getTag(Integer.parseInt(tag)));
             }
         };
 

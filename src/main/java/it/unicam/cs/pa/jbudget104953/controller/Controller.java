@@ -1,11 +1,14 @@
 package it.unicam.cs.pa.jbudget104953.controller;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
+import it.unicam.cs.pa.jbudget104953.model.Sync;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
@@ -37,6 +40,8 @@ public class Controller {
 		groupController = new ControllerGroup();
 		accountController = new ControllerAccount();
 		managementController = new ControllerManagement();
+
+		// TODO try read/write file JSON
 	}
 
 	public Controller() {
@@ -112,6 +117,20 @@ public class Controller {
 		TagList.getInstance().removeTag(TagList.getInstance().getTag(ID));
 	}
 
+	private void sync() {
+		Sync sync = new Sync();
+
+		FileWriter file;
+		try {
+			file = new FileWriter("output.json");
+			sync.write(groupController.getGroup(), file);
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	private void addCommands() {
 		command.addCommand("ADD ACCOUNT", Controller::addAccount);
 		command.addCommand("REMOVE ACCOUNT", Controller::removeAccount);
@@ -134,6 +153,7 @@ public class Controller {
 			}
 		});
 		command.addCommand("EXIT", Controller -> status = false);
+		command.addCommand("SAVE", Controller::sync);
 	}
 
 	public void start() {

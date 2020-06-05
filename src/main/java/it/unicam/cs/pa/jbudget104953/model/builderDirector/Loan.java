@@ -7,7 +7,6 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 public class Loan implements LoanInterface {
 	private final int ID;
-	private String description;
 	private FinancialInterface initialTransaction;
 	private ArrayList<FinancialInterface> repaymentInstallments;
 	private TypeScope typeScope;
@@ -59,8 +58,8 @@ public class Loan implements LoanInterface {
 	@Override
 	public String toString() {
 
-		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\t\tDescription" + description + "\n"
-				+ "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
+		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\n" + "Inital Transaction: \n"
+				+ getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
 		for (FinancialInterface e : repaymentInstallments) {
 			string += "ID financial: " + e.getID() + "\t\tDate: "
 					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
@@ -74,7 +73,6 @@ public class Loan implements LoanInterface {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ID;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((initialTransaction == null) ? 0 : initialTransaction.hashCode());
 		result = prime * result + ((repaymentInstallments == null) ? 0 : repaymentInstallments.hashCode());
 		result = prime * result + ((typeScope == null) ? 0 : typeScope.hashCode());
@@ -89,11 +87,6 @@ public class Loan implements LoanInterface {
 			return false;
 		Loan other = (Loan) obj;
 		if (ID != other.ID)
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
 			return false;
 		if (initialTransaction == null) {
 			if (other.initialTransaction != null)

@@ -50,8 +50,8 @@ public class ManagementFinancial implements ManagementInterface<FinancialInterfa
 	private boolean addElementHelper(FinancialInterface element) {
 		boolean add = financialArray.add(element);
 		if (add) {
-			balance = financialArray.parallelStream()
-					.filter(x -> x.getScheduled() != null && x.getScheduled().isCompleted())
+			balance = financialArray.parallelStream().filter(
+					x -> x.getScheduled() == null || (x.getScheduled() != null && x.getScheduled().isCompleted()))
 					.mapToDouble(x -> x.getAmount()).sum();
 			EventManager.getInstance().notify("ELEMENTS", this);
 		}
@@ -62,8 +62,8 @@ public class ManagementFinancial implements ManagementInterface<FinancialInterfa
 	public boolean removeElement(int id) {
 		boolean remove = financialArray.removeIf(x -> x.getID() == id);
 		if (remove) {
-			balance = financialArray.parallelStream()
-					.filter(x -> x.getScheduled() == null || x.getScheduled().isCompleted())
+			balance = financialArray.parallelStream().filter(
+					x -> x.getScheduled() == null || (x.getScheduled() != null && x.getScheduled().isCompleted()))
 					.mapToDouble(x -> x.getAmount()).sum();
 			EventManager.getInstance().notify("ELEMENTS", this);
 		}

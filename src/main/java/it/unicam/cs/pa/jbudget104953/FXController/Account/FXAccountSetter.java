@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.controller.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.controller.ControllerGroup;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,9 +13,11 @@ import javafx.stage.Stage;
 public class FXAccountSetter {
     protected Stage stage;
     protected ControllerAccount account = null;
+    protected ControllerGroup group = null;
 
     public void set(Map<String, Object> info) {
         this.account = (ControllerAccount) info.get("accountController");
+        this.group = (ControllerGroup) info.get("groupController");
         this.stage = (Stage) info.get("Stage");
     }
 
@@ -28,6 +31,7 @@ public class FXAccountSetter {
 
             {
                 put("accountController", account);
+                put("groupController", group);
                 put("Stage", stage);
             }
         });

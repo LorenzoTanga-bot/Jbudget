@@ -75,11 +75,10 @@ public class Account implements AccountInterface {
 	@Override
 	public ManagementInterface<?> getManagement(int ID) {
 		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
-			for (ManagementInterface<?> management : e.getValue()) {
-				if (management.getID() == ID) {
+			for (ManagementInterface<?> management : e.getValue())
+				if (management.getID() == ID)
 					return management;
-				}
-			}
+
 		return null;
 	}
 

@@ -36,6 +36,11 @@
                   <Font name="Courier" size="13.0" />
                </font>
             </Button>
+            <Button fx:id="goBack" layoutX="264.0" layoutY="123.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="GO BACK" textFill="WHITE">
+               <font>
+                  <Font name="Courier" size="13.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>

@@ -28,6 +28,7 @@ public class FXviewAccount extends FXGroupSetter {
             private static final long serialVersionUID = 1L;
 
             {
+                put("groupController", group);
                 put("accountController", account);
                 put("Stage", stage);
             }
