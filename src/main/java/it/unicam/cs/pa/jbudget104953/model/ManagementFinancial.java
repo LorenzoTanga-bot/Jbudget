@@ -1,8 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
@@ -74,11 +72,6 @@ public class ManagementFinancial implements ManagementInterface<FinancialInterfa
 	@Override
 	public ArrayList<FinancialInterface> getAllElement() {
 		return financialArray;
-	}
-
-	@Override
-	public ArrayList<FinancialInterface> getAllElementFilter(Predicate<FinancialInterface> predicate) {
-		return financialArray.parallelStream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@Override

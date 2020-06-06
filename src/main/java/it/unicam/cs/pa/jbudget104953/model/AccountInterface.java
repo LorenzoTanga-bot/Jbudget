@@ -1,6 +1,7 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeManagement;
 
@@ -65,32 +66,16 @@ public interface AccountInterface extends EventListener {
 	 * rimuove un gestore di transazioni dalla collezione
 	 * 
 	 * @param management gestore
-	 * @return true se l'operazione è andat a buon fine
+	 * @return true se l'operazione è andata a buon fine
 	 */
 	public boolean removeManagement(ManagementInterface<?> management);
 
 	/**
-	 * restituisce un gestore avente l'ID passato per parametro
-	 * 
-	 * @param id id del gestore cercato nella collezione
-	 * @return il gestore se è presente nella collezione altrimenti null
-	 */
-	public ManagementInterface<?> getManagement(int id);
-
-	/**
-	 * restituisce una collezione di tutti i gestori di un tipo
-	 * 
-	 * @param type tipo di gestori richiesti
-	 * @return collezione con tutti i gestori di quel tipo
-	 */
-	public ArrayList<ManagementInterface<?>> getManagement(TypeManagement type);
-
-	/**
 	 * restituisce una collezione di tutti i gestori (indipendentemente dal tipo)
 	 * 
-	 * @return collezione con tutti i gestori
+	 * @return map con tutti i gestori
 	 */
-	public ArrayList<ManagementInterface<?>> getManagement();
+	public Map<TypeManagement, ArrayList<ManagementInterface<?>>> getManagement();
 
 	/**
 	 * sottoscrive un osservatore all'istanza

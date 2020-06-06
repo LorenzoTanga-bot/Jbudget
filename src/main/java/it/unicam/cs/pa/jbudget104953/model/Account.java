@@ -32,9 +32,7 @@ public class Account implements AccountInterface {
 	public Account(String name, String surname, String description) {
 		this(IDAccount.getInstance().getID(), name, surname, description,
 				new HashMap<TypeManagement, ArrayList<ManagementInterface<?>>>() {
-
 					private static final long serialVersionUID = 1L;
-
 					{
 						put(TypeManagement.SHARED, new ArrayList<>());
 						put(TypeManagement.UNSHARED, new ArrayList<>());
@@ -73,31 +71,8 @@ public class Account implements AccountInterface {
 	}
 
 	@Override
-	public ManagementInterface<?> getManagement(int ID) {
-		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
-			for (ManagementInterface<?> management : e.getValue())
-				if (management.getID() == ID)
-					return management;
-
-		return null;
-	}
-
-	@Override
-	public ArrayList<ManagementInterface<?>> getManagement(TypeManagement type) {
-		return managementMap.get(type);
-	}
-
-	@Override
-	public ArrayList<ManagementInterface<?>> getManagement() {
-		return new ArrayList<ManagementInterface<?>>() {
-
-			private static final long serialVersionUID = 1L;
-
-			{
-				addAll(getManagement(TypeManagement.SHARED));
-				addAll(getManagement(TypeManagement.UNSHARED));
-			}
-		};
+	public Map<TypeManagement, ArrayList<ManagementInterface<?>>> getManagement() {
+		return managementMap;
 	}
 
 	@Override
@@ -138,20 +113,24 @@ public class Account implements AccountInterface {
 	public String toString() {
 		String string = "ID account: " + getID() + "\t\tBalance inside: " + getBalanceInside() + " - Balance outside: "
 				+ getBalanceOutside() + "\n";
-		for (ManagementInterface<?> e : getManagement())
-			string += "ID: " + e.getID() + "\tType: " + e.getType() + "\tBalance: " + e.getBalance() + "\n";
+		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
+			for (ManagementInterface<?> management : e.getValue())
+				string += "ID: " + management.getID() + "\tType: " + management.getType() + "\tBalance: "
+						+ management.getBalance() + "\n";
 		return string;
 	}
 
 	@Override
 	public void update(Object objects) {
-		if (getManagement().contains(objects)) {
+		if (managementMap.containsValue(objects)) {
 			balanceInside = 0;
 			balanceOutside = 0;
-			for (ManagementInterface<?> e : getManagement())
-				balanceInside += e.getBalance();
-			for (ManagementInterface<?> e : getManagement(TypeManagement.SHARED))
-				balanceOutside += e.getBalance();
+			for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
+				for (ManagementInterface<?> management : e.getValue()) {
+					balanceInside += management.getBalance();
+					if (e.getKey() == TypeManagement.SHARED)
+						balanceOutside += management.getBalance();
+				}
 
 			EventManager.getInstance().notify("ACCOUNTS", this);
 		}

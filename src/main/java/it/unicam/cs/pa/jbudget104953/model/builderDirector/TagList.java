@@ -74,9 +74,7 @@ public class TagList implements TagListInterface {
 			string += "Type " + e.getKey().toString() + ":\n";
 			for (TagInterface tag : e.getValue())
 				string += tag.toString() + "\n";
-
 		}
-
 		return string;
 	}
 }

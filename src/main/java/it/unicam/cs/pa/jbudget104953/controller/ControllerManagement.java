@@ -13,7 +13,7 @@ import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 
-public class ControllerManagement {
+public class ControllerManagement implements ControllerManagementInterface {
     private ManagementInterface<?> management;
 
     public boolean setManagement(ManagementInterface<?> management) {
@@ -38,12 +38,8 @@ public class ControllerManagement {
     }
 
     private FinancialInterface newFinancial(Map<String, String> info) {
-        String description = info.get("Description");
-        double amount = Double.parseDouble(info.get("Amount"));
-        ArrayList<TagInterface> tagArray = new ArrayList<>() {
-
+        ArrayList<TagInterface> tagList = new ArrayList<>() {
             private static final long serialVersionUID = 1L;
-
             {
                 if (!info.get("Tag").equals(""))
                     for (String tag : info.get("Tag").split(","))
@@ -51,45 +47,45 @@ public class ControllerManagement {
             }
         };
 
-        String[] scheduled = null;
-        if (info.get("DateScheduled") != null)
-            scheduled = info.get("DateScheduled").split("/");
+        GregorianCalendar scheduled = null;
+        if (info.get("DateScheduled") != null) {
+            String[] _scheduled = info.get("DateScheduled").split("/");
+            scheduled = new GregorianCalendar(Integer.parseInt(_scheduled[2]), Integer.parseInt(_scheduled[1]),
+                    Integer.parseInt(_scheduled[0]));
+        }
 
-        switch (info.get("TypeMovement")) {
+        makeFinancial(info.get("TypeMovement"), info.get("Description"), Double.parseDouble(info.get("Amount")),
+                new GregorianCalendar(), tagList, scheduled);
+        return DirectorFinancial.getInstance().getResult();
+    }
+
+    private void makeFinancial(String typeMovement, String description, double amount, GregorianCalendar date,
+            ArrayList<TagInterface> tagList, GregorianCalendar scheduled) {
+        switch (typeMovement) {
             case "EXPENSE":
-                if (info.get("DateScheduled") != null)
-                    DirectorFinancial.getInstance().makeExpense(description, amount, new GregorianCalendar(), tagArray,
-                            new GregorianCalendar(Integer.parseInt(scheduled[2]), Integer.parseInt(scheduled[1]),
-                                    Integer.parseInt(scheduled[0])));
-                else
-                    DirectorFinancial.getInstance().makeExpense(description, amount, new GregorianCalendar(), tagArray,
-                            null);
+                DirectorFinancial.getInstance().makeExpense(description, amount, date, tagList, scheduled);
                 break;
-
             case "REVENUE":
-                if (info.get("DateScheduled") != null)
-                    DirectorFinancial.getInstance().makeRevenue(description, amount, new GregorianCalendar(), tagArray,
-                            new GregorianCalendar(Integer.parseInt(scheduled[2]), Integer.parseInt(scheduled[1]),
-                                    Integer.parseInt(scheduled[0])));
-                else
-                    DirectorFinancial.getInstance().makeRevenue(description, amount, new GregorianCalendar(), tagArray,
-                            null);
+                DirectorFinancial.getInstance().makeRevenue(description, amount, date, tagList, scheduled);
                 break;
         }
-        return DirectorFinancial.getInstance().getResult();
     }
 
     private LoanInterface newLoan(Map<String, String> info) {
         FinancialInterface initialTransaction = newFinancial(info);
-        double ratio = Double.parseDouble(info.get("Ratio"));
         int numRate = Integer.parseInt(info.get("NumberRate"));
         double amount = (initialTransaction.getAmount() / numRate)
-                + ((initialTransaction.getAmount() / numRate) * ratio / 100);
+                + ((initialTransaction.getAmount() / numRate) * Double.parseDouble(info.get("Ratio")) / 100);
 
-        ArrayList<FinancialInterface> repaymentInstallments = new ArrayList<>() {
+        ArrayList<FinancialInterface> repaymentInstallments = makeRepayment(initialTransaction, numRate, amount);
+        MakeLoan(info.get("Scope"), initialTransaction, repaymentInstallments, Double.parseDouble(info.get("Ratio")));
+        return DirectorLoan.getInstance().getResult();
+    }
 
+    private ArrayList<FinancialInterface> makeRepayment(FinancialInterface initialTransaction, int numRate,
+            double amount) {
+        return new ArrayList<>() {
             private static final long serialVersionUID = 1L;
-
             {
                 GregorianCalendar date = (GregorianCalendar) initialTransaction.getDate().clone();
                 for (int i = 0; i < numRate; i++) {
@@ -102,11 +98,13 @@ public class ControllerManagement {
                                 new ArrayList<>(), (GregorianCalendar) date.clone());
                     add(DirectorFinancial.getInstance().getResult());
                 }
-
             }
         };
+    }
 
-        switch (info.get("Scope")) {
+    private void MakeLoan(String scope, FinancialInterface initialTransaction,
+            ArrayList<FinancialInterface> repaymentInstallments, double ratio) {
+        switch (scope) {
             case "LIQUID":
                 DirectorLoan.getInstance().makeLiquid(initialTransaction, repaymentInstallments, ratio);
                 break;
@@ -114,7 +112,7 @@ public class ControllerManagement {
                 DirectorLoan.getInstance().makeConsumer(initialTransaction, repaymentInstallments, ratio);
                 break;
         }
-        return DirectorLoan.getInstance().getResult();
+
     }
 
     public boolean addElement(Map<String, String> info) {

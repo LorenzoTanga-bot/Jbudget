@@ -1,7 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 public interface ManagementInterface<T> {
 
@@ -56,14 +55,6 @@ public interface ManagementInterface<T> {
 	 * @return tutti gli elementi della collezione
 	 */
 	public ArrayList<T> getAllElement();
-
-	/**
-	 * restiuisce tutti gli elementi della collezione filtrati
-	 * 
-	 * @param predicate filtro
-	 * @return tutti gli elementi che soddisfano il predicato
-	 */
-	public ArrayList<T> getAllElementFilter(Predicate<T> predicate);
 
 	/**
 	 * restituisce il bilancio del gestore

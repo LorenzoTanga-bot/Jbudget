@@ -39,14 +39,6 @@ public interface GroupInterface extends EventListener {
 	public ArrayList<AccountInterface> getAccounts();
 
 	/**
-	 * restituisce un account avente l'ID passato per parametro
-	 * 
-	 * @param ID ID del account cercato nella collezione
-	 * @return l'account se è presente nella collezione altrimenti null
-	 */
-	public AccountInterface getAccount(int ID);
-
-	/**
 	 * restituisce il bilancio del gruppo
 	 * 
 	 * @return bilancio

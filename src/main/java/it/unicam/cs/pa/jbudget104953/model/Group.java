@@ -58,15 +58,6 @@ public class Group implements GroupInterface {
 	}
 
 	@Override
-	public AccountInterface getAccount(int ID) {
-		for (AccountInterface a : accountArray)
-			if (a.getID() == ID)
-				return a;
-
-		return null;
-	}
-
-	@Override
 	public double getBalance() {
 		return balance;
 	}

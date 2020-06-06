@@ -14,12 +14,12 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.view.ViewConsole;
 import it.unicam.cs.pa.jbudget104953.view.ViewInterface;
 
-public class Controller {
+public class Control implements ControlInterface {
 	private final int GROUPNUM = 0;
 	private final int ACCOUNTNUM = 1;
 	private final int MANAGEMENTNUM = 2;
 	private final int TAGLISNUM = 3;
-	private Command<Controller> command;
+	private Command<Control> command;
 	private ViewInterface view;
 	private ControllerGroup groupController;
 	private ControllerAccount accountController;
@@ -28,7 +28,7 @@ public class Controller {
 	private boolean status;
 	private int feedback;
 
-	public Controller(ViewInterface view) {
+	public Control(ViewInterface view) {
 		this.view = view;
 		status = true;
 		feedback = GROUPNUM;
@@ -51,7 +51,7 @@ public class Controller {
 		groupController.setGroup(group);
 	}
 
-	public Controller() {
+	public Control() {
 		this(new ViewConsole());
 	}
 
@@ -136,18 +136,18 @@ public class Controller {
 	}
 
 	private void addCommands() {
-		command.addCommand("ADD ACCOUNT", Controller::addAccount);
-		command.addCommand("REMOVE ACCOUNT", Controller::removeAccount);
-		command.addCommand("VIEW ACCOUNT", Controller::viewAccount);
-		command.addCommand("ADD MANAGEMENT", Controller::addManagement);
-		command.addCommand("REMOVE MANAGEMENT", Controller::removeManagement);
-		command.addCommand("VIEW MANAGEMENT", Controller::viewManagement);
-		command.addCommand("ADD ELEMENT", Controller::addElement);
-		command.addCommand("REMOVE ELEMENT", Controller::removeElement);
-		command.addCommand("VIEW ELEMENT", Controller::viewElement);
+		command.addCommand("ADD ACCOUNT", Control::addAccount);
+		command.addCommand("REMOVE ACCOUNT", Control::removeAccount);
+		command.addCommand("VIEW ACCOUNT", Control::viewAccount);
+		command.addCommand("ADD MANAGEMENT", Control::addManagement);
+		command.addCommand("REMOVE MANAGEMENT", Control::removeManagement);
+		command.addCommand("VIEW MANAGEMENT", Control::viewManagement);
+		command.addCommand("ADD ELEMENT", Control::addElement);
+		command.addCommand("REMOVE ELEMENT", Control::removeElement);
+		command.addCommand("VIEW ELEMENT", Control::viewElement);
 		command.addCommand("SHOW ELEMENT", Controller -> this.feedback = TAGLISNUM);
-		command.addCommand("ADD TAG", Controller::addTag);
-		command.addCommand("REMOVE TAG", Controller::removeTag);
+		command.addCommand("ADD TAG", Control::addTag);
+		command.addCommand("REMOVE TAG", Control::removeTag);
 		command.addCommand("GO BACK", Controller -> {
 			{
 				if (feedback == TAGLISNUM)
@@ -157,7 +157,7 @@ public class Controller {
 			}
 		});
 		command.addCommand("EXIT", Controller -> status = false);
-		command.addCommand("SAVE", Controller::sync);
+		command.addCommand("SAVE", Control::sync);
 	}
 
 	public void start() {

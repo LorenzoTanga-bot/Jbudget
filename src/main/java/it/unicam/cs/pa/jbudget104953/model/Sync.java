@@ -182,13 +182,13 @@ public class Sync {
         jsonAccount.put("Description", account.getDescription());
 
         JSONArray jsonManagementArray = new JSONArray();
-        for (ManagementInterface<?> management : account.getManagement(TypeManagement.SHARED))
+        for (ManagementInterface<?> management : account.getManagement().get(TypeManagement.SHARED))
             jsonManagementArray.put(writeManagement(management));
 
         jsonAccount.put("ManagementShared", jsonManagementArray);
 
         jsonManagementArray = new JSONArray();
-        for (ManagementInterface<?> management : account.getManagement(TypeManagement.UNSHARED))
+        for (ManagementInterface<?> management : account.getManagement().get(TypeManagement.UNSHARED))
             jsonManagementArray.put(writeManagement(management));
 
         jsonAccount.put("ManagementUnshared", jsonManagementArray);

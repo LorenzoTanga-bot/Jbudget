@@ -1,8 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.LoanInterface;
@@ -70,10 +68,6 @@ public class ManagementLoan implements ManagementInterface<LoanInterface> {
 	@Override
 	public ArrayList<LoanInterface> getAllElement() {
 		return loanArray;
-	}
-
-	public ArrayList<LoanInterface> getAllElementFilter(Predicate<LoanInterface> predicate) {
-		return loanArray.parallelStream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@Override
