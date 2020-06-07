@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.controller.ControllerAccount;
-import it.unicam.cs.pa.jbudget104953.controller.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FXAccountSetter {
     protected Stage stage;
-    protected ControllerAccount account = null;
-    protected ControllerGroup group = null;
+    protected ControllerAccountInterface account = null;
+    protected ControllerGroupInterface group = null;
 
     public void set(Map<String, Object> info) {
         this.account = (ControllerAccount) info.get("accountController");

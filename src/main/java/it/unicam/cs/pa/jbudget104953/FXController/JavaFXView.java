@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.FXController.Group.FXGroup;
-import it.unicam.cs.pa.jbudget104953.controller.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.Sync;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 
 public class JavaFXView extends Application {
 
-    private ControllerGroup groupController = new ControllerGroup();
+    private ControllerGroupInterface groupController = new ControllerGroup();
 
     private Stage stage;
     private Scene groupScene;

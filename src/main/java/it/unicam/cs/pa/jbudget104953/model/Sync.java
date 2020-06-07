@@ -14,11 +14,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import it.unicam.cs.pa.jbudget104953.model.ID.IDAccount;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDFinancial;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDGroup;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDLoan;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDTag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Financial;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Loan;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.LoanInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Scheduled;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeManagement;
@@ -26,7 +33,7 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
-public class Sync {
+public class Sync implements SyncInterface {
 
     private JSONObject writeFinancial(FinancialInterface financial) {
         JSONObject jsonFinancial = new JSONObject();
@@ -251,16 +258,86 @@ public class Sync {
         return new Group(ID, accountArray);
     }
 
+    private JSONObject writeID() {
+        JSONObject jsonID = new JSONObject();
+        jsonID.put("IDAccount", IDAccount.getInstance().getID());
+        jsonID.put("IDFinancial", IDFinancial.getInstance().getID());
+        jsonID.put("IDLoan", IDLoan.getInstance().getID());
+        jsonID.put("IDManagement", IDManagement.getInstance().getID());
+        jsonID.put("IDGroup", IDGroup.getInstance().getID());
+        jsonID.put("IDTag", IDTag.getInstance().getID());
+
+        return jsonID;
+    }
+
+    private void readID(JSONObject jsonID) {
+        IDAccount.getInstance().setID(jsonID.getInt("IDAccount"));
+        IDFinancial.getInstance().setID(jsonID.getInt("IDFinancial"));
+        IDLoan.getInstance().setID(jsonID.getInt("IDLoan"));
+        IDManagement.getInstance().setID(jsonID.getInt("IDManagement"));
+        IDGroup.getInstance().setID(jsonID.getInt("IDGroup"));
+        IDTag.getInstance().setID(jsonID.getInt("IDTag"));
+    }
+
+    private JSONObject writeTag(TagInterface tag) {
+        JSONObject jsonTag = new JSONObject();
+        jsonTag.put("ID", tag.getID());
+        jsonTag.put("Name", tag.getName());
+        return jsonTag;
+    }
+
+    private TagInterface readTag(JSONObject jsonTag) {
+        return new Tag(jsonTag.getInt("ID"), jsonTag.getString("Name"));
+    }
+
+    private JSONArray writeTagList() {
+        JSONArray jsonTagList = new JSONArray();
+        for (Map.Entry<TypeMovement, ArrayList<TagInterface>> tagList : TagList.getInstance().getTag().entrySet()) {
+            for (TagInterface tag : tagList.getValue()) {
+                jsonTagList.put(new JSONObject() {
+                    {
+                        put("Type", tagList.getKey());
+                        put("Tag", writeTag(tag));
+                    }
+                });
+            }
+
+        }
+        return jsonTagList;
+    }
+
+    private void readTagList(JSONArray jsonTagList) {
+        for (Object tag : jsonTagList)
+            TagList.getInstance().addTag(TypeMovement.valueOf(((JSONObject) tag).getString("Type")),
+                    readTag(((JSONObject) tag).getJSONObject("Tag")));
+
+    }
+
+    @Override
     public void write(GroupInterface group, String path) throws IOException {
         FileWriter file = new FileWriter(path);
-        file.write(writeGroup(group).toString());
+        JSONObject jsonGroup = writeGroup(group);
+        JSONObject jsonID = writeID();
+        JSONArray jsonTagList = writeTagList();
+        JSONObject json = new JSONObject() {
+            {
+                put("Group", jsonGroup);
+                put("ID", jsonID);
+                put("TagList", jsonTagList);
+            }
+        };
+        file.write(json.toString());
         file.close();
     }
 
+    @Override
     public GroupInterface read(String path) throws IOException {
         File file = new File(path);
         JSONTokener tokener = new JSONTokener(new FileInputStream(file));
-        return readGroup(new JSONObject(tokener));
+        JSONObject tmp = new JSONObject(tokener);
+        readID(tmp.getJSONObject("ID"));
+        readTagList(tmp.getJSONArray("TagList"));
+        return readGroup(tmp.getJSONObject("Group"));
     }
 
 }

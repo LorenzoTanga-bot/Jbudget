@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.FXController.Account.FXAccount;
-import it.unicam.cs.pa.jbudget104953.controller.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +22,7 @@ public class FXviewAccount extends FXGroupSetter {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Account/AccountFX.fxml"));
         Scene accountScene = new Scene(loader.load());
         FXAccount accountFX = loader.<FXAccount>getController();
-        ControllerAccount account = new ControllerAccount();
+        ControllerAccountInterface account = new ControllerAccount();
         account.setAccount(group.getAccount(Integer.parseInt(idField.getText())));
         Map<String, Object> info = new HashMap<>() {
 

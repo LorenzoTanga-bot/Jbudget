@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.controller.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 public class FXGroupSetter {
 
     protected Stage stage;
-    protected ControllerGroup group = null;
+    protected ControllerGroupInterface group = null;
 
     public void set(Map<String, Object> info) {
         this.group = (ControllerGroup) info.get("groupController");

@@ -184,7 +184,7 @@ public class ViewConsole implements ViewInterface {
 	@Override
 	public String menuTagList() {
 		out.println(TagList.getInstance().toString());
-		out.print("ADD | REMOVE | GO BACK");
+		out.print("ADD TAG | REMOVE TAG | GO BACK");
 		return readString().toUpperCase();
 	}
 

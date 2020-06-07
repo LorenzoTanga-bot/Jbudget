@@ -3,11 +3,18 @@ package it.unicam.cs.pa.jbudget104953.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagement;
+import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagementInterface;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
 import it.unicam.cs.pa.jbudget104953.model.Sync;
+import it.unicam.cs.pa.jbudget104953.model.SyncInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
@@ -21,9 +28,9 @@ public class Control implements ControlInterface {
 	private final int TAGLISNUM = 3;
 	private Command<Control> command;
 	private ViewInterface view;
-	private ControllerGroup groupController;
-	private ControllerAccount accountController;
-	private ControllerManagement managementController;
+	private ControllerGroupInterface groupController;
+	private ControllerAccountInterface accountController;
+	private ControllerManagementInterface managementController;
 
 	private boolean status;
 	private int feedback;
@@ -43,7 +50,6 @@ public class Control implements ControlInterface {
 		try {
 			group = new Sync().read("sync.json");
 		} catch (Exception e) {
-			System.out.println(e);
 			group = new Group();
 		}
 
@@ -125,7 +131,7 @@ public class Control implements ControlInterface {
 	}
 
 	private void sync() {
-		Sync sync = new Sync();
+		SyncInterface sync = new Sync();
 
 		try {
 			sync.write(groupController.getGroup(), "sync.json");
@@ -145,7 +151,7 @@ public class Control implements ControlInterface {
 		command.addCommand("ADD ELEMENT", Control::addElement);
 		command.addCommand("REMOVE ELEMENT", Control::removeElement);
 		command.addCommand("VIEW ELEMENT", Control::viewElement);
-		command.addCommand("SHOW ELEMENT", Controller -> this.feedback = TAGLISNUM);
+		command.addCommand("SHOW TAG", Controller -> this.feedback = TAGLISNUM);
 		command.addCommand("ADD TAG", Control::addTag);
 		command.addCommand("REMOVE TAG", Control::removeTag);
 		command.addCommand("GO BACK", Controller -> {

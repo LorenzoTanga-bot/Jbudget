@@ -1,136 +1,29 @@
 {
-  "Account": [
-    {
-      "ManagementUnshared": [
-        {
-          "Type": "LOAN",
-          "Description": "nil",
-          "Element": [
-            {
-              "Ratio": 0,
-              "InitialTransaction": {
-                "Scheduled": "null",
-                "TypePayment": "DEBIT",
-                "Description": "nil",
-                "Amount": -900,
-                "TypeMovement": "EXPENSE",
-                "ID": 1,
-                "Tag": [],
-                "Date": "05-06-2020"
-              },
-              "ID": 0,
-              "RepaymentInstallments": [
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 2,
-                  "Tag": [],
-                  "Date": "03-07-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 3,
-                  "Tag": [],
-                  "Date": "31-07-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 4,
-                  "Tag": [],
-                  "Date": "28-08-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 5,
-                  "Tag": [],
-                  "Date": "25-09-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 6,
-                  "Tag": [],
-                  "Date": "23-10-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 7,
-                  "Tag": [],
-                  "Date": "20-11-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 8,
-                  "Tag": [],
-                  "Date": "18-12-2020"
-                },
-                {
-                  "Scheduled": "null",
-                  "TypePayment": "CREDIT",
-                  "Description": "",
-                  "Amount": 112.5,
-                  "TypeMovement": "REVENUE",
-                  "ID": 9,
-                  "Tag": [],
-                  "Date": "15-01-2021"
-                }
-              ],
-              "TypeScope": "CONSUMER_GOODS"
-            }
-          ],
-          "ID": 1
-        }
-      ],
-      "Description": "nil",
-      "ManagementShared": [
-        {
-          "Type": "FINANCIAL",
-          "Description": "nil",
-          "Element": [
-            {
-              "Scheduled": "null",
-              "TypePayment": "CREDIT",
-              "Description": "nil",
-              "Amount": -500,
-              "TypeMovement": "EXPENSE",
-              "ID": 0,
-              "Tag": [],
-              "Date": "05-06-2020"
-            }
-          ],
-          "ID": 0
-        }
-      ],
-      "ID": 0,
-      "Surname": "Tanganelli",
-      "Name": "Lorenzo"
-    }
+  "Group": {
+    "Account": [
+      {
+        "ManagementUnshared": [
+          { "Type": "FINANCIAL", "Description": "nil", "Element": [], "ID": 0 }
+        ],
+        "Description": "nil",
+        "ManagementShared": [],
+        "ID": 0,
+        "Surname": "ta",
+        "Name": "lo"
+      }
+    ],
+    "ID": 1
+  },
+  "TagList": [
+    { "Type": "EXPENSE", "Tag": { "ID": 0, "Name": "pippo" } },
+    { "Type": "REVENUE", "Tag": { "ID": 1, "Name": "molto" } }
   ],
-  "ID": 1
+  "ID": {
+    "IDManagement": 1,
+    "IDFinancial": 0,
+    "IDGroup": 2,
+    "IDTag": 2,
+    "IDAccount": 1,
+    "IDLoan": 0
+  }
 }
