@@ -17,6 +17,11 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 class FinancialTest {
+    int ID = 0;
+    String description = "NIL";
+    double amount = 10;
+    GregorianCalendar date = new GregorianCalendar(2020, 1, 1);
+    ArrayList<TagInterface> tag = new ArrayList<>();
 
     void compare(FinancialInterface financial, FinancialInterface financialCompare) {
         assertEquals(financial.getAmount(), financialCompare.getAmount());
@@ -30,13 +35,8 @@ class FinancialTest {
 
     @Test
     void expenseCreditTest() {
-        int ID = 0;
-        String description = "NIL";
         TypeMovement movement = TypeMovement.EXPENSE;
         TypePayment payment = TypePayment.CREDIT;
-        double amount = 10;
-        GregorianCalendar date = new GregorianCalendar(2020, 1, 1);
-        ArrayList<TagInterface> tag = new ArrayList<>();
         GregorianCalendar dateScheduled = new GregorianCalendar(2021, 1, 1);
         ScheduledInterface scheduled = new Scheduled(dateScheduled);
 
@@ -51,13 +51,8 @@ class FinancialTest {
 
     @Test
     void expenseDebtiTest() {
-        int ID = 0;
-        String description = "NIL";
         TypeMovement movement = TypeMovement.EXPENSE;
         TypePayment payment = TypePayment.DEBIT;
-        double amount = 10;
-        GregorianCalendar date = new GregorianCalendar(2020, 1, 1);
-        ArrayList<TagInterface> tag = new ArrayList<>();
         GregorianCalendar dateScheduled = null;
         ScheduledInterface scheduled = new Scheduled(dateScheduled);
 
@@ -72,13 +67,8 @@ class FinancialTest {
 
     @Test
     void revenueCreditTest() {
-        int ID = 0;
-        String description = "NIL";
         TypeMovement movement = TypeMovement.REVENUE;
         TypePayment payment = TypePayment.CREDIT;
-        double amount = 10;
-        GregorianCalendar date = new GregorianCalendar(2020, 1, 1);
-        ArrayList<TagInterface> tag = new ArrayList<>();
         GregorianCalendar dateScheduled = new GregorianCalendar(2021, 1, 1);
         ScheduledInterface scheduled = new Scheduled(dateScheduled);
 
@@ -92,13 +82,8 @@ class FinancialTest {
 
     @Test
     void revenueDebitTest() {
-        int ID = 0;
-        String description = "NIL";
         TypeMovement movement = TypeMovement.REVENUE;
         TypePayment payment = TypePayment.DEBIT;
-        double amount = 10;
-        GregorianCalendar date = new GregorianCalendar(2020, 1, 1);
-        ArrayList<TagInterface> tag = new ArrayList<>();
         GregorianCalendar dateScheduled = null;
         ScheduledInterface scheduled = new Scheduled(dateScheduled);
 
