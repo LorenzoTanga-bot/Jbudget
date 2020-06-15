@@ -2,6 +2,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 /**
@@ -12,7 +13,7 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
  *
  */
 
-public interface BuilderLoanInterface {
+public interface BuilderMovementInterface {
 
      /**
       * reset della costruzione del prestito
@@ -22,10 +23,16 @@ public interface BuilderLoanInterface {
      public boolean reset();
 
      /**
+      * set del tipo di movimento
+      * 
+      * @param typeMovement
+      */
+     public boolean setTypeMovement(TypeMovement typeMovement);
+
+     /**
       * set della prima transazione
       * 
       * @param initialTransaction movimento base della prima transazione
-      * @throws NullPointerException se il parametro passato è nil
       * @return true se l'operazione è andata a buon fine
       */
      public boolean setInitialTransaction(FinancialInterface initialTransaction);
@@ -33,17 +40,15 @@ public interface BuilderLoanInterface {
      /**
       * set delle transazioni di rimborso
       * 
-      * @param repaymentInstallments lista delle transazioni di rimborso
-      * @throws NullPointerException se il parametro passato è nil
+      * @param relatedTransaction lista delle transazioni di rimborso
       * @return true se l'operazione è andata a buon fine
       */
-     public boolean setRepaymentInstallments(ArrayList<FinancialInterface> repaymentInstallments);
+     public boolean setRelatedTransaction(ArrayList<FinancialInterface> relatedTransaction);
 
      /**
       * set scopo della transazione
       * 
       * @param repaymentInstallments enum della motivazione della transazione
-      * @throws NullPointerException se il parametro passato è nil
       * @return true se l'operazione è andata a buon fine
       */
      public boolean setTypeScope(TypeScope typeScope);
@@ -61,6 +66,6 @@ public interface BuilderLoanInterface {
       * 
       * @return restituisce
       */
-     public LoanInterface getResutl();
+     public MovementInterface getResutl();
 
 }

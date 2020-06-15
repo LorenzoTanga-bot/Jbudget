@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 /**
@@ -41,7 +41,7 @@ public interface BuilderFinancialInterface {
       * @return true se l'operazione è andata a buon fine
       */
 
-     public boolean setTypeMovement(TypeMovement type);
+     public boolean setTypeMovement(TypeFinancial type);
 
      /**
       * set di TypePayment

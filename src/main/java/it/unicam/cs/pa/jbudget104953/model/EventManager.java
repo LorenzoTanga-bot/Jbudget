@@ -35,8 +35,8 @@ public class EventManager implements EventManagerInterface {
 
     public boolean subscribe(String eventType, EventListener listener) {
         List<EventListener> users = listeners.get(eventType);
-        users.add(listener);
-        return true;
+
+        return users.add(listener);
     }
 
     public boolean unsubscribe(String eventType, EventListener listener) {

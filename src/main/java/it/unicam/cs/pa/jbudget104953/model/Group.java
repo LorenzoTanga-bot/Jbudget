@@ -10,14 +10,14 @@ public class Group implements GroupInterface {
 	private ArrayList<AccountInterface> accountArray;
 	private double balance;
 
-	public Group(int ID, ArrayList<AccountInterface> accountArray) {
+	public Group(int ID) {
 		this.ID = ID;
-		this.accountArray = accountArray;
+		this.accountArray = new ArrayList<>();
 		EventManager.getInstance("GROUP");
 	}
 
 	public Group() {
-		this(IDGroup.getInstance().getID(), new ArrayList<>());
+		this(IDGroup.getInstance().getID());
 	}
 
 	@Override

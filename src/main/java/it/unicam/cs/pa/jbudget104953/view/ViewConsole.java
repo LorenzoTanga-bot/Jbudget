@@ -76,7 +76,6 @@ public class ViewConsole implements ViewInterface {
 	public String menuGroup(GroupInterface group) {
 		out.println(group.toString());
 		out.print("ADD ACCOUNT | REMOVE ACCOUNT | VIEW ACCOUNT | EXIT");
-		out.flush();
 		return readString().toUpperCase();
 	}
 
@@ -103,8 +102,6 @@ public class ViewConsole implements ViewInterface {
 	@Override
 	public Map<String, String> addManagement() {
 		Map<String, String> info = new HashMap<>();
-		out.print("Type\nFINANCIAL | LOAN");
-		info.put("Type", readString().toUpperCase());
 		out.print("Description");
 		info.put("Description", readString());
 		out.print("Is SHARED WITH THE GROUP\n Y/N");
@@ -120,12 +117,11 @@ public class ViewConsole implements ViewInterface {
 		return readString().toUpperCase();
 	}
 
-	@Override
-	public Map<String, String> newFinancial() {
+	private Map<String, String> newFinancial() {
 		Map<String, String> info = new HashMap<>();
 
 		out.print("NEW FINANCIAL\nEXPENSE | REVENUE");
-		info.put("TypeMovement", readString().toUpperCase());
+		info.put("TypeFinancial", readString().toUpperCase());
 
 		out.print("AMOUNT");
 		info.put("Amount", String.valueOf(readNum()));
@@ -145,7 +141,7 @@ public class ViewConsole implements ViewInterface {
 		} while (true);
 		info.put("Tag", IDtag);
 
-		out.print("Description");
+		out.print("DESCRIPTION");
 		info.put("Description", readString());
 
 		out.print("Is Scheduled\nY/N");
@@ -154,30 +150,96 @@ public class ViewConsole implements ViewInterface {
 			info.put("DateScheduled", readString());
 		} else
 			info.put("DateScheduled", null);
-
 		return info;
 	}
 
-	@Override
-	public Map<String, String> newLoan() {
-		Map<String, String> info = new HashMap<>();
+	private Map<String, String> newSingle() {
+		Map<String, String> info = newFinancial();
 
-		out.print("INITIAL TRANSACTION\n EXPENSE | REVENUE");
-		info.put("TypeMovement", readString().toUpperCase());
-		out.print("AMOUNT");
-		info.put("Amount", String.valueOf(readNum()));
-		out.print("DESCRIPTION");
-		info.put("Description", readString());
-		info.put("Tag", "");
-		info.put("DataScheduled", null);
+		return new HashMap<String, String>() {
+			private static final long serialVersionUID = 1L;
+
+			{
+				put("TypeFinancial0", info.get("TypeFinancial"));
+				put("Amount0", info.get("Amount"));
+				put("Tag0", info.get("Tag"));
+				put("Description0", info.get("Description"));
+				put("DateScheduled0", info.get("DateScheduled"));
+			}
+		};
+	}
+
+	private Map<String, String> newMulti() {
+		Map<String, String> info = new HashMap<>();
+		int i = 0;
+		do {
+			Map<String, String> financial = newFinancial();
+			info.put("TypeFinancial" + i, financial.get("TypeFinancial"));
+			info.put("Amount" + i, financial.get("Amount"));
+			info.put("Tag" + i, financial.get("Tag"));
+			info.put("Description" + i, financial.get("Description"));
+			info.put("DateScheduled" + i, financial.get("DateScheduled"));
+
+			i++;
+			out.print("Do you want to insert a new one?\nY/N");
+		} while (readString().toUpperCase().equals("Y"));
+		info.put("numMovement", String.valueOf(i));
+
+		return info;
+
+	}
+
+	private Map<String, String> newRepeated() {
+		Map<String, String> info = new HashMap<>();
+		info.putAll(newSingle());
 
 		out.print("NUMBER OF RATE");
 		info.put("NumberRate", String.valueOf((int) readNum()));
 
+		out.print("EVERY ? DAY");
+		info.put("Day", String.valueOf((int) readNum()));
+		return info;
+	}
+
+	private Map<String, String> newLoan() {
+		Map<String, String> info = new HashMap<>();
+
+		info.putAll(newSingle());
+
+		out.print("NUMBER OF RATE");
+		info.put("NumberRate", String.valueOf((int) readNum()));
+
+		out.print("EVERY ? DAY");
+		info.put("Day", String.valueOf((int) readNum()));
+
 		out.print("SCOPE\nLIQUID | CONSUMER");
 		info.put("Scope", readString().toUpperCase());
+
 		out.print("RATIO");
 		info.put("Ratio", String.valueOf(readNum()));
+		return info;
+	}
+
+	@Override
+	public Map<String, String> newMovement() {
+		Map<String, String> info = new HashMap<>();
+		out.print("SINGLE | MULTI | REPEATED | LOAN");
+		info.put("TypeMovement", readString().toUpperCase());
+		switch (info.get("TypeMovement")) {
+			case "SINGLE":
+				info.putAll(newSingle());
+				break;
+			case "MULTI":
+				info.putAll(newMulti());
+				break;
+			case "REPEATED":
+				info.putAll(newRepeated());
+				break;
+			case "LOAN":
+				info.putAll(newLoan());
+				break;
+		}
+
 		return info;
 	}
 

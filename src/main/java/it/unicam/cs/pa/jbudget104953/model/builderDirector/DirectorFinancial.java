@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 public class DirectorFinancial implements DirectorFinancialInterface {
@@ -38,7 +38,7 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
 		financialBuilder.setScheduled(new Scheduled(scheduled));
-		financialBuilder.setTypeMovement(TypeMovement.EXPENSE);
+		financialBuilder.setTypeMovement(TypeFinancial.EXPENSE);
 		if (scheduled == null)
 			financialBuilder.setTypePayment(TypePayment.DEBIT);
 		else
@@ -55,7 +55,7 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
 		financialBuilder.setScheduled(null);
-		financialBuilder.setTypeMovement(TypeMovement.REVENUE);
+		financialBuilder.setTypeMovement(TypeFinancial.REVENUE);
 		if (scheduled == null)
 			financialBuilder.setTypePayment(TypePayment.DEBIT);
 		else

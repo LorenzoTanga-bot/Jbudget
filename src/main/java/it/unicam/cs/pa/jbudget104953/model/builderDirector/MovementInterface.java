@@ -2,6 +2,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
 /**
@@ -9,7 +10,7 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
  * 
  * @author Lorenzo Tanganelli lorenzo.tanganelli@studenti.unicam.it
  */
-public interface LoanInterface extends Comparable<LoanInterface> {
+public interface MovementInterface extends Comparable<MovementInterface> {
 
 	/**
 	 * restituisce l'ID del prestito
@@ -17,6 +18,13 @@ public interface LoanInterface extends Comparable<LoanInterface> {
 	 * @return ID del prestito
 	 */
 	public int getID();
+
+	/**
+	 * restituisce il tipo di movimento
+	 * 
+	 * @return tipo di movimento
+	 */
+	public TypeMovement getType();
 
 	/**
 	 * restituisce la transazione iniziale
@@ -30,7 +38,7 @@ public interface LoanInterface extends Comparable<LoanInterface> {
 	 * 
 	 * @return rate del rimborso
 	 */
-	public ArrayList<FinancialInterface> getRepaymentInstallments();
+	public ArrayList<FinancialInterface> getRelatedTransaction();
 
 	/**
 	 * restituisce lo scopo della transazione (Consumer goods o Liquid assets)

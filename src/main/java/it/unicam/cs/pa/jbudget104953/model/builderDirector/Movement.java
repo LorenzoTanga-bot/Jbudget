@@ -3,20 +3,23 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
-public class Loan implements LoanInterface {
+public class Movement implements MovementInterface {
 	private final int ID;
+	private TypeMovement typeMovement;
 	private FinancialInterface initialTransaction;
-	private ArrayList<FinancialInterface> repaymentInstallments;
+	private ArrayList<FinancialInterface> relatedTransaction;
 	private TypeScope typeScope;
 	private double ratio;
 
-	public Loan(int ID, FinancialInterface initialTransaction, ArrayList<FinancialInterface> repaymentInstallments,
-			TypeScope typeScope, double ratio) {
+	public Movement(int ID, TypeMovement typeMovement, FinancialInterface initialTransaction,
+			ArrayList<FinancialInterface> relatedTransaction, TypeScope typeScope, double ratio) {
 		this.ID = ID;
+		this.typeMovement = typeMovement;
 		this.initialTransaction = initialTransaction;
-		this.repaymentInstallments = repaymentInstallments;
+		this.relatedTransaction = relatedTransaction;
 		this.typeScope = typeScope;
 		this.ratio = ratio;
 	}
@@ -27,13 +30,18 @@ public class Loan implements LoanInterface {
 	}
 
 	@Override
+	public TypeMovement getType() {
+		return typeMovement;
+	}
+
+	@Override
 	public FinancialInterface getInitialTransaction() {
 		return initialTransaction;
 	}
 
 	@Override
-	public ArrayList<FinancialInterface> getRepaymentInstallments() {
-		return repaymentInstallments;
+	public ArrayList<FinancialInterface> getRelatedTransaction() {
+		return relatedTransaction;
 	}
 
 	@Override
@@ -49,18 +57,19 @@ public class Loan implements LoanInterface {
 	@Override
 	public double getBalance() {
 		double balance = initialTransaction.getAmount();
-		balance += repaymentInstallments.parallelStream()
-				.filter(x -> x.getScheduled() != null && x.getScheduled().isCompleted()).mapToDouble(x -> x.getAmount())
-				.sum();
+		if (relatedTransaction != null)
+			balance += relatedTransaction.parallelStream()
+					.filter(x -> x.getScheduled() != null && x.getScheduled().isCompleted())
+					.mapToDouble(x -> x.getAmount()).sum();
 		return balance;
 	}
 
 	@Override
 	public String toString() {
 
-		String string = "ID Loan: " + getID() + "\t\tScope: " + getTypeScope() + "\n" + "Inital Transaction: \n"
-				+ getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
-		for (FinancialInterface e : repaymentInstallments) {
+		String string = "ID: " + getID() + "\tType: " + getType() + "\tScope: " + getTypeScope() + "\n"
+				+ "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
+		for (FinancialInterface e : relatedTransaction) {
 			string += "ID financial: " + e.getID() + "\t\tDate: "
 					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
 					+ e.getAmount() + "\n";
@@ -74,7 +83,7 @@ public class Loan implements LoanInterface {
 		int result = 1;
 		result = prime * result + ID;
 		result = prime * result + ((initialTransaction == null) ? 0 : initialTransaction.hashCode());
-		result = prime * result + ((repaymentInstallments == null) ? 0 : repaymentInstallments.hashCode());
+		result = prime * result + ((relatedTransaction == null) ? 0 : relatedTransaction.hashCode());
 		result = prime * result + ((typeScope == null) ? 0 : typeScope.hashCode());
 		return result;
 	}
@@ -83,9 +92,9 @@ public class Loan implements LoanInterface {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof Loan))
+		if (!(obj instanceof Movement))
 			return false;
-		Loan other = (Loan) obj;
+		Movement other = (Movement) obj;
 		if (ID != other.ID)
 			return false;
 		if (initialTransaction == null) {
@@ -93,10 +102,10 @@ public class Loan implements LoanInterface {
 				return false;
 		} else if (!initialTransaction.equals(other.initialTransaction))
 			return false;
-		if (repaymentInstallments == null) {
-			if (other.repaymentInstallments != null)
+		if (relatedTransaction == null) {
+			if (other.relatedTransaction != null)
 				return false;
-		} else if (!repaymentInstallments.equals(other.repaymentInstallments))
+		} else if (!relatedTransaction.equals(other.relatedTransaction))
 			return false;
 		if (typeScope != other.typeScope)
 			return false;
@@ -104,7 +113,7 @@ public class Loan implements LoanInterface {
 	}
 
 	@Override
-	public int compareTo(LoanInterface o) {
+	public int compareTo(MovementInterface o) {
 		return initialTransaction.compareTo(o.getInitialTransaction());
 	}
 

@@ -13,7 +13,6 @@ public interface ControllerManagementInterface {
      */
     public boolean setManagement(ManagementInterface<?> management);
 
-
     /**
      * restituisce il gestore controllato
      * 
@@ -34,13 +33,6 @@ public interface ControllerManagementInterface {
      * @return bilancio
      */
     public double getBalance();
-
-    /**
-     * restituisce il tipo di gestore (Financial o Loan)
-     * 
-     * @return
-     */
-    public String getType();
 
     /**
      * restituisce la descrizione del gestore

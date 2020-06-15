@@ -17,8 +17,7 @@ public class Account implements AccountInterface {
 	private double balanceOutside;
 	private Map<TypeManagement, ArrayList<ManagementInterface<?>>> managementMap;
 
-	public Account(int ID, String name, String surname, String description,
-			Map<TypeManagement, ArrayList<ManagementInterface<?>>> managementArray) {
+	public Account(int ID, String name, String surname, String description) {
 		this.ID = ID;
 		this.name = name;
 		this.surname = surname;
@@ -26,18 +25,17 @@ public class Account implements AccountInterface {
 		this.balanceInside = 0;
 		this.balanceOutside = 0;
 		EventManager.getInstance("ACCOUNTS");
-		this.managementMap = managementArray;
+		this.managementMap = new HashMap<TypeManagement, ArrayList<ManagementInterface<?>>>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put(TypeManagement.SHARED, new ArrayList<>());
+				put(TypeManagement.UNSHARED, new ArrayList<>());
+			}
+		};
 	}
 
 	public Account(String name, String surname, String description) {
-		this(IDAccount.getInstance().getID(), name, surname, description,
-				new HashMap<TypeManagement, ArrayList<ManagementInterface<?>>>() {
-					private static final long serialVersionUID = 1L;
-					{
-						put(TypeManagement.SHARED, new ArrayList<>());
-						put(TypeManagement.UNSHARED, new ArrayList<>());
-					}
-				});
+		this(IDAccount.getInstance().getID(), name, surname, description);
 	}
 
 	@Override
@@ -92,6 +90,7 @@ public class Account implements AccountInterface {
 		if (add) {
 			management.subscribe(this);
 			EventManager.getInstance().notify("ACCOUNTS", this);
+			balance();
 		}
 		return add;
 	}
@@ -105,6 +104,7 @@ public class Account implements AccountInterface {
 		if (remove) {
 			management.unsubscribe(this);
 			EventManager.getInstance().notify("ACCOUNTS", this);
+			balance();
 		}
 		return remove;
 	}
@@ -115,25 +115,31 @@ public class Account implements AccountInterface {
 				+ getBalanceOutside() + "\n";
 		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
 			for (ManagementInterface<?> management : e.getValue())
-				string += "ID: " + management.getID() + "\tType: " + management.getType() + "\tBalance: "
-						+ management.getBalance() + "\n";
+				string += "Type: " + e.getKey() + "\tID: " + management.getID() + "\tDescription: "
+						+ management.getDescription() + "\tBalance: " + management.getBalance() + "\n";
 		return string;
+	}
+
+	private void balance() {
+		balanceInside = 0;
+		balanceOutside = 0;
+
+		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
+			for (ManagementInterface<?> management : e.getValue()) {
+				balanceInside += management.getBalance();
+				if (e.getKey() == TypeManagement.SHARED)
+					balanceOutside += management.getBalance();
+			}
 	}
 
 	@Override
 	public void update(Object objects) {
-		if (managementMap.containsValue(objects)) {
-			balanceInside = 0;
-			balanceOutside = 0;
-			for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
-				for (ManagementInterface<?> management : e.getValue()) {
-					balanceInside += management.getBalance();
-					if (e.getKey() == TypeManagement.SHARED)
-						balanceOutside += management.getBalance();
-				}
+		for (Map.Entry<TypeManagement, ArrayList<ManagementInterface<?>>> e : managementMap.entrySet())
+			if (e.getValue().contains(objects)) {
+				balance();
+				EventManager.getInstance().notify("ACCOUNTS", this);
+			}
 
-			EventManager.getInstance().notify("ACCOUNTS", this);
-		}
 	}
 
 }

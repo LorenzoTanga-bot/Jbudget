@@ -3,27 +3,56 @@
     "Account": [
       {
         "ManagementUnshared": [
-          { "Type": "FINANCIAL", "Description": "nil", "Element": [], "ID": 0 }
+          {
+            "Description": "prova",
+            "Element": [
+              {
+                "RelatedTransaction": [
+                  {
+                    "TypeFinancial": "REVENUE",
+                    "Scheduled": "null",
+                    "TypePayment": "DEBIT",
+                    "Description": "nil",
+                    "Amount": 15,
+                    "ID": 1,
+                    "Tag": [],
+                    "Date": "14-06-2020"
+                  }
+                ],
+                "TypeMovement": "MULTI",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "EXPENSE",
+                  "Scheduled": "null",
+                  "TypePayment": "DEBIT",
+                  "Description": "nil",
+                  "Amount": -10,
+                  "ID": 0,
+                  "Tag": [],
+                  "Date": "14-06-2020"
+                },
+                "ID": 0
+              }
+            ],
+            "ID": 0
+          }
         ],
         "Description": "nil",
         "ManagementShared": [],
         "ID": 0,
-        "Surname": "ta",
-        "Name": "lo"
+        "Surname": "Tanganelli",
+        "Name": "Lorenzo"
       }
     ],
     "ID": 1
   },
-  "TagList": [
-    { "Type": "EXPENSE", "Tag": { "ID": 0, "Name": "pippo" } },
-    { "Type": "REVENUE", "Tag": { "ID": 1, "Name": "molto" } }
-  ],
+  "TagList": [],
   "ID": {
     "IDManagement": 1,
-    "IDFinancial": 0,
+    "IDFinancial": 2,
     "IDGroup": 2,
-    "IDTag": 2,
+    "IDTag": 0,
     "IDAccount": 1,
-    "IDLoan": 0
+    "IDLoan": 1
   }
 }

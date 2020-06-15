@@ -4,20 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 public class Financial implements FinancialInterface {
 	private final int ID;
 	private String description;
-	private TypeMovement typeMovement;
+	private TypeFinancial typeMovement;
 	private TypePayment typePayment;
 	private double amount;
 	private GregorianCalendar date;
 	private ArrayList<TagInterface> tag;
 	private ScheduledInterface scheduled;
 
-	public Financial(int ID, String description, TypeMovement typeMovement, TypePayment typePayment, double amount,
+	public Financial(int ID, String description, TypeFinancial typeMovement, TypePayment typePayment, double amount,
 			GregorianCalendar date, ArrayList<TagInterface> tag, ScheduledInterface scheduled) {
 
 		this.ID = ID;
@@ -41,7 +41,7 @@ public class Financial implements FinancialInterface {
 	}
 
 	@Override
-	public TypeMovement getTypeMovement() {
+	public TypeFinancial getTypeFinancial() {
 		return typeMovement;
 	}
 
@@ -72,7 +72,7 @@ public class Financial implements FinancialInterface {
 
 	@Override
 	public String toString() {
-		String string = "ID financial: " + getID() + "\t\tType: " + getTypeMovement() + "\t\tPayment: "
+		String string = "ID financial: " + getID() + "\t\tType: " + getTypeFinancial() + "\t\tPayment: "
 				+ getTypePayment() + "\t\tDate: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime()))
 				+ "\n" + "Amount: " + getAmount();
 		if (getScheduled() != null)

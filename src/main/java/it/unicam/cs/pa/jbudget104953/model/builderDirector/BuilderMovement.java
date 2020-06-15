@@ -3,25 +3,35 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 
 import it.unicam.cs.pa.jbudget104953.model.ID.IDLoan;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
-public class BuilderLoan implements BuilderLoanInterface {
+public class BuilderMovement implements BuilderMovementInterface {
 
 	private FinancialInterface initialTransaction;
-	private ArrayList<FinancialInterface> repaymentInstallments;
+	private TypeMovement typeMovement;
+	private ArrayList<FinancialInterface> relatedTransaction;
 	private TypeScope typeScope;
 	private double ratio;
 
-	public BuilderLoan() {
+	public BuilderMovement() {
 		reset();
 	}
 
 	@Override
 	public boolean reset() {
 		initialTransaction = null;
-		repaymentInstallments = null;
+		relatedTransaction = null;
 		typeScope = null;
 
+		return true;
+	}
+
+	@Override
+	public boolean setTypeMovement(TypeMovement typeMovement) {
+		if (typeMovement == null)
+			throw new NullPointerException();
+		this.typeMovement = typeMovement;
 		return true;
 	}
 
@@ -34,10 +44,8 @@ public class BuilderLoan implements BuilderLoanInterface {
 	}
 
 	@Override
-	public boolean setRepaymentInstallments(ArrayList<FinancialInterface> repaymentInstallments) {
-		if (initialTransaction == null)
-			throw new NullPointerException();
-		this.repaymentInstallments = repaymentInstallments;
+	public boolean setRelatedTransaction(ArrayList<FinancialInterface> relatedTransaction) {
+		this.relatedTransaction = relatedTransaction;
 		return true;
 	}
 
@@ -56,9 +64,10 @@ public class BuilderLoan implements BuilderLoanInterface {
 	}
 
 	@Override
-	public LoanInterface getResutl() {
+	public MovementInterface getResutl() {
 		try {
-			return new Loan(IDLoan.getInstance().getID(), initialTransaction, repaymentInstallments, typeScope, ratio);
+			return new Movement(IDLoan.getInstance().getID(), typeMovement, initialTransaction, relatedTransaction,
+					typeScope, ratio);
 		} catch (Exception e) {
 			return null;
 		}

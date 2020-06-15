@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 
 /**
  * Questa interfaccia definisce la collezione di tutti i tag
@@ -33,7 +33,7 @@ public interface TagListInterface {
 	 * 
 	 * @return tutti i tag
 	 */
-	public Map<TypeMovement, ArrayList<TagInterface>> getTag();
+	public Map<TypeFinancial, ArrayList<TagInterface>> getTag();
 
 	/**
 	 * aggiunge un tag alla collezione
@@ -42,8 +42,14 @@ public interface TagListInterface {
 	 * @param tag  tag che si vuole aggiungere alla collezione
 	 * @return true se l'operazione è andata a buon fine
 	 */
-	public boolean addTag(TypeMovement type, TagInterface tag);
+	public boolean addTag(TypeFinancial type, TagInterface tag);
 
+	/**
+	 * rimuovere un tag dalla collezione
+	 * 
+	 * @param tag tag da rimuovere
+	 * @return
+	 */
 	public boolean removeTag(TagInterface tag);
 
 }

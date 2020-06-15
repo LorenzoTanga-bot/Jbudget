@@ -17,7 +17,7 @@ import it.unicam.cs.pa.jbudget104953.model.Sync;
 import it.unicam.cs.pa.jbudget104953.model.SyncInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.view.ViewConsole;
 import it.unicam.cs.pa.jbudget104953.view.ViewInterface;
 
@@ -98,10 +98,7 @@ public class Control implements ControlInterface {
 
 	/* MANAGEMENT */
 	private void addElement() {
-		if (managementController.getType().equals("FINANCIAL"))
-			managementController.addElement(view.newFinancial());
-		else
-			managementController.addElement(view.newLoan());
+		managementController.addElement(view.newMovement());
 	}
 
 	private void removeElement() {
@@ -117,10 +114,10 @@ public class Control implements ControlInterface {
 		Map<String, String> map = view.addTag();
 		switch (map.get("Type")) {
 			case "EXPENSE":
-				TagList.getInstance().addTag(TypeMovement.EXPENSE, new Tag(map.get("Name")));
+				TagList.getInstance().addTag(TypeFinancial.EXPENSE, new Tag(map.get("Name")));
 				break;
 			case "REVENUE":
-				TagList.getInstance().addTag(TypeMovement.REVENUE, new Tag(map.get("Name")));
+				TagList.getInstance().addTag(TypeFinancial.REVENUE, new Tag(map.get("Name")));
 				break;
 		}
 	}

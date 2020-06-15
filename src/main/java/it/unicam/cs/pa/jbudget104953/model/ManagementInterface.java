@@ -12,13 +12,6 @@ public interface ManagementInterface<T> {
 	public int getID();
 
 	/**
-	 * restituisce il tipo di gestore (Financial o Loan)
-	 * 
-	 * @return
-	 */
-	public String getType();
-
-	/**
 	 * restituisce la descrizione del gestore
 	 * 
 	 * @return
@@ -28,10 +21,10 @@ public interface ManagementInterface<T> {
 	/**
 	 * aggiunge elementi alla collezione
 	 * 
-	 * @param element elemento
+	 * @param movementInterface elemento
 	 * @return true se l'operazione è andata a buon fine
 	 */
-	public boolean addElement(Object element);
+	public boolean addElement(Object movementInterface);
 
 	/**
 	 * rimuove un'elemento avente l'ID passato per parametro

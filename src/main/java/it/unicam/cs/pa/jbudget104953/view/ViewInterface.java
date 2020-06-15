@@ -23,9 +23,7 @@ public interface ViewInterface extends EventListener {
 
 	public String menuManagement(ManagementInterface<?> management);
 
-	public Map<String, String> newFinancial();
-
-	public Map<String, String> newLoan();
+	public Map<String, String> newMovement();
 
 	public String menuTagList();
 

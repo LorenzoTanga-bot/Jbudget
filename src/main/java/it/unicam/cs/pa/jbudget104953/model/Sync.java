@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -22,12 +21,13 @@ import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDTag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Financial;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.Loan;
-import it.unicam.cs.pa.jbudget104953.model.builderDirector.LoanInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.Movement;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Scheduled;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeManagement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
@@ -39,7 +39,7 @@ public class Sync implements SyncInterface {
         JSONObject jsonFinancial = new JSONObject();
         jsonFinancial.put("ID", financial.getID());
         jsonFinancial.put("Description", financial.getDescription());
-        jsonFinancial.put("TypeMovement", financial.getTypeMovement());
+        jsonFinancial.put("TypeFinancial", financial.getTypeFinancial());
         jsonFinancial.put("TypePayment", financial.getTypePayment());
         jsonFinancial.put("Amount", financial.getAmount());
         jsonFinancial.put("Date", new SimpleDateFormat("dd-MM-yyyy").format(financial.getDate().getTime()));
@@ -64,7 +64,7 @@ public class Sync implements SyncInterface {
         int ID = jsonFinancial.getInt("ID");
         String description = jsonFinancial.getString("Description");
         double amount = jsonFinancial.getDouble("Amount");
-        TypeMovement typeMovement = TypeMovement.valueOf(jsonFinancial.getString("TypeMovement"));
+        TypeFinancial typeMovement = TypeFinancial.valueOf(jsonFinancial.getString("TypeFinancial"));
         TypePayment typePayment = TypePayment.valueOf(jsonFinancial.getString("TypePayment"));
         String[] date = jsonFinancial.getString("Date").split("-");
         String[] scheduled = jsonFinancial.getString("Scheduled").split("-");
@@ -90,30 +90,35 @@ public class Sync implements SyncInterface {
                         Integer.parseInt(scheduled[1]), Integer.parseInt(scheduled[0]))));
     }
 
-    private JSONObject writeLoan(LoanInterface loan) {
-        JSONObject jsonLoan = new JSONObject();
-        jsonLoan.put("ID", loan.getID());
-        jsonLoan.put("TypeScope", loan.getTypeScope());
-        jsonLoan.put("Ratio", loan.getRatio());
-        jsonLoan.put("InitialTransaction", writeFinancial(loan.getInitialTransaction()));
+    private JSONObject writeMovement(MovementInterface movement) {
+        JSONObject jsonMovement = new JSONObject();
+        jsonMovement.put("ID", movement.getID());
+        jsonMovement.put("TypeMovement", movement.getType());
+        jsonMovement.put("TypeScope", movement.getTypeScope());
+        jsonMovement.put("Ratio", movement.getRatio());
+        jsonMovement.put("InitialTransaction", writeFinancial(movement.getInitialTransaction()));
 
         JSONArray jsonElementArray = new JSONArray();
-        for (FinancialInterface element : loan.getRepaymentInstallments())
-            jsonElementArray.put(writeFinancial(element));
+        if (movement.getRelatedTransaction() != null)
+            for (FinancialInterface element : movement.getRelatedTransaction())
+                jsonElementArray.put(writeFinancial(element));
 
-        jsonLoan.put("RepaymentInstallments", jsonElementArray);
+        jsonMovement.put("RelatedTransaction", jsonElementArray);
 
-        return jsonLoan;
+        return jsonMovement;
     }
 
-    private LoanInterface readLoan(JSONObject jsonLoan) {
+    private MovementInterface readMovement(JSONObject jsonLoan) {
         int ID = jsonLoan.getInt("ID");
-        TypeScope scope = TypeScope.valueOf(jsonLoan.getString("TypeScope"));
+        TypeMovement type = TypeMovement.valueOf(jsonLoan.getString("TypeMovement"));
+        TypeScope scope = null;
+        if (type == TypeMovement.LOAN)
+            scope = TypeScope.valueOf(jsonLoan.getString("TypeScope"));
         double ratio = jsonLoan.getDouble("Ratio");
         FinancialInterface initialTransaction = readFinancial(jsonLoan.getJSONObject("InitialTransaction"));
 
-        JSONArray jsonFinancilArray = jsonLoan.getJSONArray("RepaymentInstallments");
-        ArrayList<FinancialInterface> repaymentInstallments = new ArrayList<>() {
+        JSONArray jsonFinancilArray = jsonLoan.getJSONArray("RelatedTransaction");
+        ArrayList<FinancialInterface> relatedTransaction = new ArrayList<>() {
 
             private static final long serialVersionUID = 1L;
             {
@@ -123,62 +128,36 @@ public class Sync implements SyncInterface {
             }
         };
 
-        return new Loan(ID, initialTransaction, repaymentInstallments, scope, ratio);
+        return new Movement(ID, type, initialTransaction, relatedTransaction, scope, ratio);
 
     }
 
     private JSONObject writeManagement(ManagementInterface<?> management) {
         JSONObject jsonManagement = new JSONObject();
         jsonManagement.put("ID", management.getID());
-        jsonManagement.put("Type", management.getType());
         jsonManagement.put("Description", management.getDescription());
 
         JSONArray jsonElementArray = new JSONArray();
-        if (management.getType().equals("FINANCIAL"))
-            for (Object element : management.getAllElement())
-                jsonElementArray.put(writeFinancial((FinancialInterface) element));
-
-        else
-            for (Object element : management.getAllElement())
-                jsonElementArray.put(writeLoan((LoanInterface) element));
+        for (Object element : management.getAllElement())
+            jsonElementArray.put(writeMovement((MovementInterface) element));
 
         jsonManagement.put("Element", jsonElementArray);
 
         return jsonManagement;
     }
 
-    private ManagementInterface<?> readManagement(JSONObject jsonManagement) {
+    private ManagementInterface<MovementInterface> readManagement(JSONObject jsonManagement) {
         int ID = jsonManagement.getInt("ID");
         String description = jsonManagement.getString("Description");
 
+        ManagementInterface<MovementInterface> management = new ManagementMovement(ID, description);
+
         JSONArray elements = jsonManagement.getJSONArray("Element");
 
-        if (jsonManagement.getString("Type").equals("FINANCIAL")) {
-            ArrayList<FinancialInterface> financialArray = new ArrayList<>() {
+        for (Object financial : elements)
+            management.addElement(readMovement((JSONObject) financial));
 
-                private static final long serialVersionUID = 1L;
-
-                {
-                    for (Object financial : elements) {
-                        add(readFinancial((JSONObject) financial));
-                    }
-                }
-            };
-            return new ManagementFinancial(ID, financialArray, description);
-        } else {
-            ArrayList<LoanInterface> loanArray = new ArrayList<>() {
-
-                private static final long serialVersionUID = 1L;
-
-                {
-                    for (Object financial : elements) {
-                        add(readLoan((JSONObject) financial));
-                    }
-                }
-            };
-            return new ManagementLoan(ID, loanArray, description);
-
-        }
+        return management;
     }
 
     private JSONObject writeAccount(AccountInterface account) {
@@ -208,29 +187,19 @@ public class Sync implements SyncInterface {
         String name = jsonAccount.getString("Name");
         String surname = jsonAccount.getString("Surname");
         String description = jsonAccount.getString("Description");
+        AccountInterface account = new Account(ID, name, surname, description);
 
         JSONArray jsonManagementArray = jsonAccount.getJSONArray("ManagementShared");
-        ArrayList<ManagementInterface<?>> shareList = new ArrayList<>();
 
         for (Object management : jsonManagementArray)
-            shareList.add(readManagement((JSONObject) management));
+            account.addManagement(TypeManagement.SHARED, readManagement((JSONObject) management));
 
         jsonManagementArray = jsonAccount.getJSONArray("ManagementUnshared");
-        ArrayList<ManagementInterface<?>> unshareList = new ArrayList<>();
 
         for (Object management : jsonManagementArray)
-            unshareList.add(readManagement((JSONObject) management));
+            account.addManagement(TypeManagement.UNSHARED, readManagement((JSONObject) management));
 
-        Map<TypeManagement, ArrayList<ManagementInterface<?>>> managementArray = new HashMap<>() {
-
-            private static final long serialVersionUID = 1L;
-
-            {
-                put(TypeManagement.SHARED, shareList);
-                put(TypeManagement.UNSHARED, unshareList);
-            }
-        };
-        return new Account(ID, name, surname, description, managementArray);
+        return account;
     }
 
     private JSONObject writeGroup(GroupInterface group) {
@@ -249,13 +218,13 @@ public class Sync implements SyncInterface {
 
     private GroupInterface readGroup(JSONObject jsonGroup) {
         int ID = jsonGroup.getInt("ID");
+        GroupInterface group = new Group(ID);
 
         JSONArray jsonAccountArray = jsonGroup.getJSONArray("Account");
-        ArrayList<AccountInterface> accountArray = new ArrayList<>();
         for (Object account : jsonAccountArray)
-            accountArray.add(readAccount((JSONObject) account));
+            group.addAccount(readAccount((JSONObject) account));
 
-        return new Group(ID, accountArray);
+        return group;
     }
 
     private JSONObject writeID() {
@@ -292,7 +261,7 @@ public class Sync implements SyncInterface {
 
     private JSONArray writeTagList() {
         JSONArray jsonTagList = new JSONArray();
-        for (Map.Entry<TypeMovement, ArrayList<TagInterface>> tagList : TagList.getInstance().getTag().entrySet()) {
+        for (Map.Entry<TypeFinancial, ArrayList<TagInterface>> tagList : TagList.getInstance().getTag().entrySet()) {
             for (TagInterface tag : tagList.getValue()) {
                 jsonTagList.put(new JSONObject() {
                     {
@@ -308,7 +277,7 @@ public class Sync implements SyncInterface {
 
     private void readTagList(JSONArray jsonTagList) {
         for (Object tag : jsonTagList)
-            TagList.getInstance().addTag(TypeMovement.valueOf(((JSONObject) tag).getString("Type")),
+            TagList.getInstance().addTag(TypeFinancial.valueOf(((JSONObject) tag).getString("Type")),
                     readTag(((JSONObject) tag).getJSONObject("Tag")));
 
     }

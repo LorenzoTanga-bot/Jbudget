@@ -3,7 +3,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
+import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 /**
@@ -32,7 +32,7 @@ public interface FinancialInterface extends Comparable<FinancialInterface> {
 	 * 
 	 * @return tipo di movimento
 	 */
-	public TypeMovement getTypeMovement();
+	public TypeFinancial getTypeFinancial();
 
 	/**
 	 * restituisce il tipo di pagamento (Debit o Credit)

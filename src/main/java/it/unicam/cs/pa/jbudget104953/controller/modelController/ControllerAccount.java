@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
-import it.unicam.cs.pa.jbudget104953.model.ManagementFinancial;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
-import it.unicam.cs.pa.jbudget104953.model.ManagementLoan;
+import it.unicam.cs.pa.jbudget104953.model.ManagementMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeManagement;
 
 public class ControllerAccount implements ControllerAccountInterface {
@@ -55,25 +54,11 @@ public class ControllerAccount implements ControllerAccountInterface {
 
     @Override
     public boolean addManagement(Map<String, String> info) {
-        switch (info.get("Type")) {
-            case "FINANCIAL":
-                switch (info.get("Shared")) {
-                    case "Y":
-                        return account.addManagement(TypeManagement.SHARED,
-                                new ManagementFinancial(info.get("Description")));
-                    case "N":
-                        return account.addManagement(TypeManagement.UNSHARED,
-                                new ManagementFinancial(info.get("Description")));
-                }
-            case "LOAN":
-                switch (info.get("Shared")) {
-                    case "Y":
-                        return account.addManagement(TypeManagement.SHARED,
-                                new ManagementLoan(info.get("Description")));
-                    case "N":
-                        return account.addManagement(TypeManagement.UNSHARED,
-                                new ManagementLoan(info.get("Description")));
-                }
+        switch (info.get("Shared")) {
+            case "Y":
+                return account.addManagement(TypeManagement.SHARED, new ManagementMovement(info.get("Description")));
+            case "N":
+                return account.addManagement(TypeManagement.UNSHARED, new ManagementMovement(info.get("Description")));
         }
         return false;
     }
