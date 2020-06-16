@@ -103,6 +103,13 @@ public interface ControllerAccountInterface {
     public ArrayList<ManagementInterface<?>> getManagement(TypeManagement type);
 
     /**
+     * restituisce una collegione di tutti i gestori
+     * 
+     * @return collezione con tutti i gestori
+     */
+    public ArrayList<ManagementInterface<?>> getAllInOneManagement();
+
+    /**
      * restituisce una collezione di tutti i gestori (indipendentemente dal tipo)
      * 
      * @return collezione con tutti i gestori

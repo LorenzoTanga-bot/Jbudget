@@ -102,6 +102,8 @@ public class ViewConsole implements ViewInterface {
 	@Override
 	public Map<String, String> addManagement() {
 		Map<String, String> info = new HashMap<>();
+		out.print("Name");
+		info.put("Name", readString());
 		out.print("Description");
 		info.put("Description", readString());
 		out.print("Is SHARED WITH THE GROUP\n Y/N");

@@ -56,9 +56,11 @@ public class ControllerAccount implements ControllerAccountInterface {
     public boolean addManagement(Map<String, String> info) {
         switch (info.get("Shared")) {
             case "Y":
-                return account.addManagement(TypeManagement.SHARED, new ManagementMovement(info.get("Description")));
+                return account.addManagement(TypeManagement.SHARED,
+                        new ManagementMovement(info.get("Name"), info.get("Description")));
             case "N":
-                return account.addManagement(TypeManagement.UNSHARED, new ManagementMovement(info.get("Description")));
+                return account.addManagement(TypeManagement.UNSHARED,
+                        new ManagementMovement(info.get("Name"), info.get("Description")));
         }
         return false;
     }
@@ -81,6 +83,18 @@ public class ControllerAccount implements ControllerAccountInterface {
     @Override
     public ArrayList<ManagementInterface<?>> getManagement(TypeManagement type) {
         return getManagement().get(type);
+    }
+
+    @Override
+    public ArrayList<ManagementInterface<?>> getAllInOneManagement() {
+        return new ArrayList<ManagementInterface<?>>() {
+            private static final long serialVersionUID = 1L;
+
+            {
+                addAll(getManagement(TypeManagement.SHARED));
+                addAll(getManagement(TypeManagement.UNSHARED));
+            }
+        };
     }
 
     @Override

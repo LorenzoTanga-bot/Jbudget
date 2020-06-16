@@ -1,47 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets ?>
-<?import javafx.scene.control.Button ?>
-<?import javafx.scene.control.Label ?>
-<?import javafx.scene.layout.AnchorPane ?>
-<?import javafx.scene.layout.BorderPane ?>
-<?import javafx.scene.text.Font ?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383461;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.Account.FXAccount">
-   <top>
-      <Label fx:id="console" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="550.0" style="-fx-background-color: #624370;" text="Label" textFill="WHITE" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Courier" size="14.0" />
-         </font>
-         <BorderPane.margin>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.pa.jbudget104953.FXController.Account.AccountFX">
+   <children>
+      <Label text="JBUDGET">
+         <VBox.margin>
             <Insets top="10.0" />
-         </BorderPane.margin>
+         </VBox.margin>
       </Label>
-   </top>
-   <bottom>
-      <AnchorPane fx:id="GroupMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ListView fx:id="listAccount" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="200.0" styleClass="list-cell">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </ListView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="background">
          <children>
-            <Button fx:id="addManagement" layoutX="83.0" layoutY="88.0" mnemonicParsing="false" onAction="#addManagement" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="ADD MANAGEMENT" textFill="WHITE">
-               <font>
-                  <Font name="Courier" size="13.0" />
-               </font>
+            <Button fx:id="btnAddManagement" mnemonicParsing="false" onAction="#addManagement" text="ADD MANAGEMENT">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
             </Button>
-            <Button fx:id="removeManagement" layoutX="225.0" layoutY="88.0" mnemonicParsing="false" onAction="#removeManagement" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="REMOVE MANAGEMENT" textFill="WHITE">
-               <font>
-                  <Font name="Courier" size="13.0" />
-               </font>
+            <Button fx:id="btnRemoveManagement" mnemonicParsing="false" onAction="#removeManagement" text="REMOVE MANAGEMENT">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
             </Button>
-            <Button fx:id="viewManagement" layoutX="393.0" layoutY="88.0" mnemonicParsing="false" onAction="#viewManagement" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="VIEW MANAGEMENT" textFill="WHITE">
-               <font>
-                  <Font name="Courier" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="goBack" layoutX="264.0" layoutY="123.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #624370 #624370 #624370 #624370;" text="GO BACK" textFill="WHITE">
-               <font>
-                  <Font name="Courier" size="13.0" />
-               </font>
+            <Button fx:id="btnViewManagement" mnemonicParsing="false" onAction="#viewManagement" text="VIEW MANAGEMENT">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
             </Button>
          </children>
-      </AnchorPane>
-   </bottom>
-</BorderPane>
+      </HBox>
+      <Button mnemonicParsing="false" onAction="#goBack" text="BACK" />
+   </children>
+</VBox>

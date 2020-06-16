@@ -67,8 +67,8 @@ public class Movement implements MovementInterface {
 	@Override
 	public String toString() {
 
-		String string = "ID: " + getID() + "\tType: " + getType() + "\tScope: " + getTypeScope() + "\n"
-				+ "Inital Transaction: \n" + getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
+		String string = "ID: " + getID() + "\tType: " + getType() + "\n" + "Inital Transaction: \n"
+				+ getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
 		for (FinancialInterface e : relatedTransaction) {
 			string += "ID financial: " + e.getID() + "\t\tDate: "
 					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "

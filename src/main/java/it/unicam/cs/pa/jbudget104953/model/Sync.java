@@ -135,6 +135,7 @@ public class Sync implements SyncInterface {
     private JSONObject writeManagement(ManagementInterface<?> management) {
         JSONObject jsonManagement = new JSONObject();
         jsonManagement.put("ID", management.getID());
+        jsonManagement.put("Name", management.getName());
         jsonManagement.put("Description", management.getDescription());
 
         JSONArray jsonElementArray = new JSONArray();
@@ -147,10 +148,9 @@ public class Sync implements SyncInterface {
     }
 
     private ManagementInterface<MovementInterface> readManagement(JSONObject jsonManagement) {
-        int ID = jsonManagement.getInt("ID");
-        String description = jsonManagement.getString("Description");
 
-        ManagementInterface<MovementInterface> management = new ManagementMovement(ID, description);
+        ManagementInterface<MovementInterface> management = new ManagementMovement(jsonManagement.getInt("ID"),
+                jsonManagement.getString("Name"), jsonManagement.getString("Description"));
 
         JSONArray elements = jsonManagement.getJSONArray("Element");
 

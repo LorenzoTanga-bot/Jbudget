@@ -159,7 +159,13 @@ public class Control implements ControlInterface {
 					feedback--;
 			}
 		});
-		command.addCommand("EXIT", Controller -> status = false);
+		command.addCommand("EXIT", Controller -> {
+			{
+				sync();
+				status = false;
+
+			}
+		});
 		command.addCommand("SAVE", Control::sync);
 	}
 

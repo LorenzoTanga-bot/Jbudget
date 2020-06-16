@@ -226,8 +226,12 @@ public class ControllerManagement implements ControllerManagementInterface {
     }
 
     @Override
+    public ArrayList<?> getAllElement() {
+        return management.getAllElement();
+    }
+
+    @Override
     public String toString() {
         return management.toString();
     }
-
 }

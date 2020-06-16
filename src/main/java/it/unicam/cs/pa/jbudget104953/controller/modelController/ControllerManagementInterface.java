@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.controller.modelController;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
@@ -64,6 +65,13 @@ public interface ControllerManagementInterface {
      * @return l'elemento se è presente nella collezione altrimenti null
      */
     public Object getElement(int ID);
+
+    /**
+     * restituisce la collezione di tutti gli elementi
+     * 
+     * @return la collezione di tutti gli elementi
+     */
+    public ArrayList<?> getAllElement();
 
     public String toString();
 }

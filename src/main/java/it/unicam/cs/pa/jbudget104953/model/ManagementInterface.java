@@ -12,6 +12,13 @@ public interface ManagementInterface<T> {
 	public int getID();
 
 	/**
+	 * restituisce il nome del gestore
+	 * 
+	 * @return nome del gestore
+	 */
+	public String getName();
+
+	/**
 	 * restituisce la descrizione del gestore
 	 * 
 	 * @return

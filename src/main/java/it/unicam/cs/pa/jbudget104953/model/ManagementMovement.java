@@ -7,16 +7,18 @@ import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
 
 public class ManagementMovement implements ManagementInterface<MovementInterface> {
 	private final int ID;
+	private String name;
 	private String description;
 	private ArrayList<MovementInterface> movementArray;
 	private double balance;
 
-	public ManagementMovement(String description) {
-		this(IDManagement.getInstance().getID(), description);
+	public ManagementMovement(String name, String description) {
+		this(IDManagement.getInstance().getID(), name, description);
 	}
 
-	public ManagementMovement(int ID, String description) {
+	public ManagementMovement(int ID, String name, String description) {
 		this.ID = ID;
+		this.name = name;
 		this.description = description;
 		this.movementArray = new ArrayList<MovementInterface>();
 		EventManager.getInstance("MANAGER");
@@ -26,6 +28,11 @@ public class ManagementMovement implements ManagementInterface<MovementInterface
 	@Override
 	public int getID() {
 		return ID;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -81,7 +88,7 @@ public class ManagementMovement implements ManagementInterface<MovementInterface
 
 	@Override
 	public String toString() {
-		String string = "ID management: " + getID() + "\t\tBalance: " + getBalance() + "\n";
+		String string = "ID management: " + getID() + "\tName: " + getName() + "\tBalance: " + getBalance() + "\n";
 		for (MovementInterface e : movementArray)
 			string += "ID:" + e.getID() + "\t\tType: " + e.getTypeScope() + "\t\tAmount: " + e.getBalance() + "\n";
 
