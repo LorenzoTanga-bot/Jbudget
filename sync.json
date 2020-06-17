@@ -1,1 +1,33 @@
-{"Group":{"Account":[{"ManagementUnshared":[],"Description":"nil","ManagementShared":[{"Description":"nil","Element":[],"ID":0,"Name":"Casa"}],"ID":1,"Surname":"Tanganelli","Name":"Lorenzo"}],"ID":2},"TagList":[],"ID":{"IDManagement":1,"IDFinancial":0,"IDGroup":3,"IDTag":0,"IDAccount":3,"IDLoan":0}}
+{
+  "Group": {
+    "Account": [
+      {
+        "ManagementUnshared": [],
+        "Description": "nil",
+        "ManagementShared": [
+          { "Description": "nil", "Element": [], "ID": 0, "Name": "Casa" }
+        ],
+        "ID": 1,
+        "Surname": "Tanganelli",
+        "Name": "Lorenzo"
+      }
+    ],
+    "ID": 2
+  },
+  "TagList": [
+    { "Type": "EXPENSE", "Tag": { "ID": 0, "Name": "Expense" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 2, "Name": "LorenzoTag" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 3, "Name": "AlessandraTag" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 5, "Name": "Pluto" } },
+    { "Type": "REVENUE", "Tag": { "ID": 1, "Name": "Revenue" } },
+    { "Type": "REVENUE", "Tag": { "ID": 4, "Name": "VeronocaTag" } }
+  ],
+  "ID": {
+    "IDManagement": 1,
+    "IDFinancial": 0,
+    "IDGroup": 3,
+    "IDTag": 6,
+    "IDAccount": 3,
+    "IDLoan": 0
+  }
+}

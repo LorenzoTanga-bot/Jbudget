@@ -3,6 +3,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 import java.util.ArrayList;
 import java.util.Map;
 
+import it.unicam.cs.pa.jbudget104953.model.EventListener;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 
 /**
@@ -51,5 +52,21 @@ public interface TagListInterface {
 	 * @return
 	 */
 	public boolean removeTag(TagInterface tag);
+
+	/**
+	 * sottoscrive un osservatore all'istanza
+	 * 
+	 * @param listener osservatore
+	 * @return true se l'operazione è andata a buon fine
+	 */
+	public boolean subscribe(EventListener listener);
+
+	/**
+	 * annulla l'iscrizione di un osservatore all'istanza
+	 * 
+	 * @param listener
+	 * @return true se l'operazione è andata a buon fine
+	 */
+	public boolean unsubscribe(EventListener listener);
 
 }

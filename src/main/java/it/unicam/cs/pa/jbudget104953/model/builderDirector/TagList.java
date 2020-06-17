@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.unicam.cs.pa.jbudget104953.model.EventListener;
+import it.unicam.cs.pa.jbudget104953.model.EventManager;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 
 public class TagList implements TagListInterface {
@@ -11,6 +13,7 @@ public class TagList implements TagListInterface {
 	private Map<TypeFinancial, ArrayList<TagInterface>> tagMap;
 
 	private TagList() {
+		EventManager.getInstance("TAG");
 		tagMap = new HashMap<>();
 		for (TypeFinancial typeMovement : TypeFinancial.values()) {
 			tagMap.put(typeMovement, new ArrayList<>());
@@ -55,7 +58,9 @@ public class TagList implements TagListInterface {
 	@Override
 	public boolean addTag(TypeFinancial type, TagInterface tag) {
 		ArrayList<TagInterface> array = tagMap.get(type);
-		return array.add(tag);
+		Boolean add = array.add(tag);
+		EventManager.getInstance().notify("TAG", this);
+		return add;
 	}
 
 	@Override
@@ -65,6 +70,16 @@ public class TagList implements TagListInterface {
 			if (e.getValue().remove(tag))
 				remove = true;
 		return remove;
+	}
+
+	@Override
+	public boolean subscribe(EventListener listener) {
+		return EventManager.getInstance().subscribe("TAG", listener);
+	}
+
+	@Override
+	public boolean unsubscribe(EventListener listener) {
+		return EventManager.getInstance().subscribe("TAG", listener);
 	}
 
 	@Override

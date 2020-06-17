@@ -1,5 +1,7 @@
 package it.unicam.cs.pa.jbudget104953.FXController;
 
+import java.util.Map;
+
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagementInterface;
@@ -28,4 +30,13 @@ public interface FXSetterInterface {
     public Stage getPopUp();
 
     public boolean setPopUp(Stage stage);
+
+    public Map<String, String> getInfo();
+
+    public boolean setInfo(Map<String, String> elementMode);
+
+    public Stage getPopUpTag();
+
+    public void setPopUpTag(Stage popUpTag);
+
 }

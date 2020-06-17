@@ -28,7 +28,7 @@ public class Tag implements TagInterface {
 
 	@Override
 	public String toString() {
-		return "ID tag: " + getID() + "\t\tName: " + getName();
+		return "ID: " + getID() + "\ttName: " + getName();
 	}
 
 	@Override

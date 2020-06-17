@@ -21,6 +21,7 @@ dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
   compile group: 'org.json', name: 'json', version: '20200518'
+  compile group: 'org.controlsfx', name: 'controlsfx', version: '11.0.1'
 }
 
 javafx {

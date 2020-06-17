@@ -77,6 +77,7 @@ public class GroupFX implements Initializable, EventListener {
     public void selectItem() {
         btnRemoveAccount.setDisable(false);
         btnViewAccount.setDisable(false);
+
     }
 
     public void addAccount() {

@@ -15,7 +15,17 @@
   -fx-text-fill: #ffffff;
 }
 
-.choice-box,
+.choice-box {
+  -fx-background-color: #033860;
+  -fx-mark-color: #087ca7;
+  -fx-text-fill: #ffffff;
+}
+
+#choice-box-popup-menu {
+  -fx-background-color: #033860;
+  -fx-text-fill: #ffffff;
+}
+
 .list-cell,
 .button {
   -fx-background-color: #033860;

@@ -54,7 +54,7 @@ public class ManagementFX implements Initializable, EventListener {
 
     public void addElement() {
         FXSetter.getInstance().setPopUp(new Stage());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Management/AddElementFX.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Management/SelectElementFX.fxml"));
         try {
             FXSetter.getInstance().getPopUp().setScene(new Scene(loader.load()));
         } catch (IOException e) {

@@ -1,5 +1,8 @@
 package it.unicam.cs.pa.jbudget104953.FXController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccount;
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
@@ -19,11 +22,14 @@ public class FXSetter implements FXSetterInterface {
     private ControllerAccountInterface account;
     private ControllerManagementInterface management;
     private Stage popUp;
+    private Stage popUpTag;
+    private Map<String, String> info;
 
     private FXSetter() {
         group = new ControllerGroup();
         account = new ControllerAccount();
         management = new ControllerManagement();
+        info = new HashMap<>();
     }
 
     public static FXSetterInterface getInstance() {
@@ -85,6 +91,27 @@ public class FXSetter implements FXSetterInterface {
     public boolean setPopUp(Stage stage) {
         this.popUp = stage;
         return true;
+    }
+
+    @Override
+    public Map<String, String> getInfo() {
+        return info;
+    }
+
+    @Override
+    public boolean setInfo(Map<String, String> info) {
+        this.info = info;
+        return true;
+    }
+
+    @Override
+    public Stage getPopUpTag() {
+        return popUpTag;
+    }
+
+    @Override
+    public void setPopUpTag(Stage popUpTag) {
+        this.popUpTag = popUpTag;
     }
 
 }
