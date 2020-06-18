@@ -120,7 +120,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btOneMore" mnemonicParsing="false" text="ONE MORE">
+            <Button fx:id="btOneMore" mnemonicParsing="false" onAction="#oneMore" text="ONE MORE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>

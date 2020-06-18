@@ -54,7 +54,7 @@ public interface ManagementInterface<T> {
 	 * 
 	 * @return tutti gli elementi della collezione
 	 */
-	public ArrayList<T> getAllElement();
+	public ArrayList<Object> getAllElement();
 
 	/**
 	 * restituisce il bilancio del gestore

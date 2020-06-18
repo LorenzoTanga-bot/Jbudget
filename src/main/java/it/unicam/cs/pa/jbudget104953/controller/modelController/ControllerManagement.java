@@ -40,6 +40,11 @@ public class ControllerManagement implements ControllerManagementInterface {
     }
 
     @Override
+    public String getName() {
+        return management.getName();
+    }
+
+    @Override
     public String getDescription() {
         return management.getDescription();
     }
@@ -116,7 +121,7 @@ public class ControllerManagement implements ControllerManagementInterface {
 
     private ArrayList<FinancialInterface> makeRepeatedTransaction(FinancialInterface initialTransaction,
             Map<String, String> info) {
-        int numRate = Integer.parseInt(info.get("NumberRate"));
+        int numRate = Integer.parseInt(info.get("NumberMovement"));
         int day;
         if (info.get("Day") != null)
             day = Integer.parseInt(info.get("Day"));
@@ -145,7 +150,7 @@ public class ControllerManagement implements ControllerManagementInterface {
     private ArrayList<FinancialInterface> makeRelatedTransaction(Map<String, String> info) {
         ArrayList<FinancialInterface> relatedTransaction = new ArrayList<>();
 
-        for (int i = 1; i < Integer.valueOf(info.get("numMovement")); i++) {
+        for (int i = 1; i < Integer.valueOf(info.get("NumberMovement")); i++) {
 
             final int x = i;
 
@@ -226,7 +231,7 @@ public class ControllerManagement implements ControllerManagementInterface {
     }
 
     @Override
-    public ArrayList<?> getAllElement() {
+    public ArrayList<Object> getAllElement() {
         return management.getAllElement();
     }
 

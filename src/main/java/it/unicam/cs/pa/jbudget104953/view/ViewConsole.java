@@ -185,7 +185,7 @@ public class ViewConsole implements ViewInterface {
 			i++;
 			out.print("Do you want to insert a new one?\nY/N");
 		} while (readString().toUpperCase().equals("Y"));
-		info.put("numMovement", String.valueOf(i));
+		info.put("NumberMovement", String.valueOf(i));
 
 		return info;
 
@@ -196,7 +196,7 @@ public class ViewConsole implements ViewInterface {
 		info.putAll(newSingle());
 
 		out.print("NUMBER OF RATE");
-		info.put("NumberRate", String.valueOf((int) readNum()));
+		info.put("NumberMovement", String.valueOf((int) readNum()));
 
 		out.print("EVERY ? DAY");
 		info.put("Day", String.valueOf((int) readNum()));
@@ -209,7 +209,7 @@ public class ViewConsole implements ViewInterface {
 		info.putAll(newSingle());
 
 		out.print("NUMBER OF RATE");
-		info.put("NumberRate", String.valueOf((int) readNum()));
+		info.put("NumberMovement", String.valueOf((int) readNum()));
 
 		out.print("EVERY ? DAY");
 		info.put("Day", String.valueOf((int) readNum()));

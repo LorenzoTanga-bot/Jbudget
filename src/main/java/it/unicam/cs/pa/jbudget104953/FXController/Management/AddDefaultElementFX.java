@@ -13,6 +13,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,12 +24,15 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.CheckComboBox;
 
 public class AddDefaultElementFX implements Initializable, EventListener {
+
+    private int numberMovement = 0;
 
     @FXML
     Label lTitle;
@@ -36,7 +41,10 @@ public class AddDefaultElementFX implements Initializable, EventListener {
     ChoiceBox<TypeFinancial> cbType;
 
     @FXML
-    TextField tfDescription;
+    TextField tfAmount;
+
+    @FXML
+    TextArea taDescription;
 
     @FXML
     RadioButton rbScheduled;
@@ -80,7 +88,34 @@ public class AddDefaultElementFX implements Initializable, EventListener {
     private void initLoan() {
         lTitle.setText("Loan");
         btOneMore.setDisable(true);
-        btNext.setText("Next");
+        btNext.setText("NEXT");
+    }
+
+    private void add() {
+        getInput();
+        FXSetter.getInstance().getControllerManagement().addElement(FXSetter.getInstance().getInfo());
+        FXSetter.getInstance().getPopUp().close();
+    }
+
+    private void next() {
+
+    }
+
+    private void initButton() {
+        btNext.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                switch (btNext.getText()) {
+                    case "ADD":
+                        add();
+                        break;
+                    case "NEXT":
+                        next();
+                        break;
+                }
+
+            }
+        });
     }
 
     private void initTagBox() {
@@ -127,19 +162,21 @@ public class AddDefaultElementFX implements Initializable, EventListener {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         switch (FXSetter.getInstance().getInfo().get("TypeMovement")) {
-            case "Single":
+            case "SINGLE":
                 initSingle();
                 break;
-            case "Multi":
+            case "MULTI":
                 initMulti();
                 break;
-            case "Repeated":
+            case "REPEATED":
                 initRepeated();
                 break;
-            case "Loan":
+            case "LOAND":
                 initLoan();
         }
+        FXSetter.getInstance().getInfo().put("NumberMovement", "0");
         TagList.getInstance().subscribe(this);
+        initButton();
         initType();
         initScheduled();
     }
@@ -154,6 +191,37 @@ public class AddDefaultElementFX implements Initializable, EventListener {
         }
         FXSetter.getInstance().getPopUpTag().setTitle("Add Tag - Jbudget");
         FXSetter.getInstance().getPopUpTag().show();
+    }
+
+    private void getInput() {
+        FXSetter.getInstance().getInfo().put("TypeFinancial" + numberMovement,
+                cbType.getSelectionModel().getSelectedItem().toString());
+        FXSetter.getInstance().getInfo().put("Amount" + numberMovement, tfAmount.getText());
+        FXSetter.getInstance().getInfo().put("Description" + numberMovement, taDescription.getText());
+        FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement, null);
+        if (rbScheduled.isSelected())
+            FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement,
+                    dateScheduled.getValue().getDayOfMonth() + "/" + dateScheduled.getValue().getMonthValue() + "/"
+                            + dateScheduled.getValue().getYear());
+        String IDtag = "";
+        for (TagInterface tag : ccbTag.getItems()) {
+            IDtag += tag.getID();
+        }
+        FXSetter.getInstance().getInfo().put("Tag" + numberMovement, IDtag);
+    }
+
+    private void resetInput() {
+        cbType.getSelectionModel().clearSelection();
+        tfAmount.clear();
+        taDescription.clear();
+        rbScheduled.disarm();
+        dateScheduled.disarm();
+    }
+
+    public void oneMore() {
+        getInput();
+        resetInput();
+        numberMovement++;
     }
 
     public void goBack() {

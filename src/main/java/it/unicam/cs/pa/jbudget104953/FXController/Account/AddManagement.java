@@ -24,6 +24,7 @@ public class AddManagement {
             FXSetter.getInstance().getControllerAccount().addManagement(new HashMap<>() {
                 private static final long serialVersionUID = 1L;
                 {
+                    put("Name", txName.getText());
                     put("Description", taDescription.getText());
                     if (rbShared.isSelected())
                         put("Shared", "Y");

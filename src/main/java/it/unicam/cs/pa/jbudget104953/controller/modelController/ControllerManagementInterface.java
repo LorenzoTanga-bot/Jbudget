@@ -36,6 +36,13 @@ public interface ControllerManagementInterface {
     public double getBalance();
 
     /**
+     * restituisce il nome del gestore
+     * 
+     * @return nome
+     */
+    public String getName();
+
+    /**
      * restituisce la descrizione del gestore
      * 
      * @return
@@ -66,12 +73,7 @@ public interface ControllerManagementInterface {
      */
     public Object getElement(int ID);
 
-    /**
-     * restituisce la collezione di tutti gli elementi
-     * 
-     * @return la collezione di tutti gli elementi
-     */
-    public ArrayList<?> getAllElement();
-
     public String toString();
+
+    public ArrayList<Object> getAllElement();
 }

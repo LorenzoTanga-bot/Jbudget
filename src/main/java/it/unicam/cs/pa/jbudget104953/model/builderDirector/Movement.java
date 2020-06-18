@@ -69,11 +69,12 @@ public class Movement implements MovementInterface {
 
 		String string = "ID: " + getID() + "\tType: " + getType() + "\n" + "Inital Transaction: \n"
 				+ getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
-		for (FinancialInterface e : relatedTransaction) {
-			string += "ID financial: " + e.getID() + "\t\tDate: "
-					+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
-					+ e.getAmount() + "\n";
-		}
+		if (relatedTransaction != null)
+			for (FinancialInterface e : relatedTransaction)
+				string += "ID financial: " + e.getID() + "\t\tDate: "
+						+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
+						+ e.getAmount() + "\n";
+
 		return string;
 	}
 

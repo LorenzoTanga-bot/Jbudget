@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.unicam.cs.pa.jbudget104953.FXController.FXSetter;
-import it.unicam.cs.pa.jbudget104953.model.EventListener;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Tag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagList;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;

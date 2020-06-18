@@ -25,16 +25,16 @@ public class SelectElementFX implements Initializable {
     private FXMLLoader getLoader() {
         switch (chType.getSelectionModel().getSelectedItem()) {
             case "Single":
-                FXSetter.getInstance().getInfo().put("TypeMovement", "Single");
+                FXSetter.getInstance().getInfo().put("TypeMovement", "SINGLE");
                 break;
             case "Multi":
-                FXSetter.getInstance().getInfo().put("TypeMovement", "Multi");
+                FXSetter.getInstance().getInfo().put("TypeMovement", "MULTI");
                 break;
             case "Repeated":
-                FXSetter.getInstance().getInfo().put("TypeMovement", "Repeated");
+                FXSetter.getInstance().getInfo().put("TypeMovement", "REPEATED");
                 break;
             case "Loan":
-                FXSetter.getInstance().getInfo().put("TypeMovement", "Loan");
+                FXSetter.getInstance().getInfo().put("TypeMovement", "LOAN");
         }
         return new FXMLLoader(getClass().getResource("/Management/AddDefaultElementFX.fxml"));
 

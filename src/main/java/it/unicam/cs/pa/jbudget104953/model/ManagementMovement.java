@@ -67,8 +67,15 @@ public class ManagementMovement implements ManagementInterface<MovementInterface
 	}
 
 	@Override
-	public ArrayList<MovementInterface> getAllElement() {
-		return movementArray;
+	public ArrayList<Object> getAllElement() {
+		return new ArrayList<>() {
+			private static final long serialVersionUID = 1L;
+			{
+				for (MovementInterface movenent : movementArray) {
+					add((Object) movenent);
+				}
+			}
+		};
 	}
 
 	@Override
