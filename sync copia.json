@@ -1,0 +1,117 @@
+{
+  "Group": {
+    "Account": [
+      {
+        "ManagementUnshared": [
+          {
+            "Description": "NIL",
+            "Element": [
+              {
+                "RelatedTransaction": [],
+                "TypeMovement": "SINGLE",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "EXPENSE",
+                  "Scheduled": "null",
+                  "TypePayment": "DEBIT",
+                  "Description": "nil",
+                  "Amount": -10,
+                  "ID": 37,
+                  "Tag": [0, 1, 3],
+                  "Date": "19-04-2021"
+                },
+                "ID": 8
+              },
+              {
+                "RelatedTransaction": [],
+                "TypeMovement": "SINGLE",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "REVENUE",
+                  "Scheduled": "20-04-2021",
+                  "TypePayment": "CREDIT",
+                  "Description": "nil",
+                  "Amount": 15,
+                  "ID": 38,
+                  "Tag": [2],
+                  "Date": "19-04-2021"
+                },
+                "ID": 9
+              },
+              {
+                "RelatedTransaction": [],
+                "TypeMovement": "SINGLE",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "REVENUE",
+                  "Scheduled": "null",
+                  "TypePayment": "DEBIT",
+                  "Description": "nil",
+                  "Amount": 5,
+                  "ID": 39,
+                  "Tag": [2],
+                  "Date": "19-03-2021"
+                },
+                "ID": 10
+              },
+              {
+                "RelatedTransaction": [],
+                "TypeMovement": "SINGLE",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "REVENUE",
+                  "Scheduled": "20-02-2021",
+                  "TypePayment": "CREDIT",
+                  "Description": "n",
+                  "Amount": 6,
+                  "ID": 40,
+                  "Tag": [2],
+                  "Date": "19-02-2021"
+                },
+                "ID": 11
+              },
+              {
+                "RelatedTransaction": [],
+                "TypeMovement": "SINGLE",
+                "Ratio": 0,
+                "InitialTransaction": {
+                  "TypeFinancial": "EXPENSE",
+                  "Scheduled": "03-04-2021",
+                  "TypePayment": "CREDIT",
+                  "Description": "ni",
+                  "Amount": -22,
+                  "ID": 41,
+                  "Tag": [0],
+                  "Date": "19-07-2020"
+                },
+                "ID": 12
+              }
+            ],
+            "ID": 2,
+            "Name": "Lorenzo"
+          }
+        ],
+        "Description": "nil",
+        "ManagementShared": [],
+        "ID": 1,
+        "Surname": "Tanganelli",
+        "Name": "Lorenzo"
+      }
+    ],
+    "ID": 2
+  },
+  "TagList": [
+    { "Type": "REVENUE", "Tag": { "ID": 2, "Name": "n" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 0, "Name": "nil" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 1, "Name": "p" } },
+    { "Type": "EXPENSE", "Tag": { "ID": 3, "Name": "prestito" } }
+  ],
+  "ID": {
+    "IDManagement": 3,
+    "IDFinancial": 42,
+    "IDGroup": 3,
+    "IDTag": 4,
+    "IDAccount": 2,
+    "IDLoan": 13
+  }
+}

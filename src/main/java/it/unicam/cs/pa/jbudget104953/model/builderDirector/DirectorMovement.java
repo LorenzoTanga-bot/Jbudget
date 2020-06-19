@@ -61,6 +61,7 @@ public class DirectorMovement implements DirectorMovementInterface {
 		movementBuilder.setInitialTransaction(initialTransaction);
 		movementBuilder.setRelatedTransaction(null);
 		movementBuilder.setTypeScope(null);
+		movementBuilder.setRatio(0);
 		return true;
 	}
 
@@ -72,6 +73,7 @@ public class DirectorMovement implements DirectorMovementInterface {
 		movementBuilder.setInitialTransaction(initialTransaction);
 		movementBuilder.setRelatedTransaction(relatedTransaction);
 		movementBuilder.setTypeScope(null);
+		movementBuilder.setRatio(0);
 		return true;
 	}
 
@@ -83,6 +85,7 @@ public class DirectorMovement implements DirectorMovementInterface {
 		movementBuilder.setInitialTransaction(initialTransaction);
 		movementBuilder.setRelatedTransaction(repeatedTransaction);
 		movementBuilder.setTypeScope(null);
+		movementBuilder.setRatio(0);
 		return true;
 	}
 

@@ -77,7 +77,7 @@ public class Financial implements FinancialInterface {
 				+ getTypePayment() + "\t\tDate: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime()))
 				+ "\n" + "Amount: " + getAmount();
 		if (getScheduled() != null)
-			string += "\t\tScheduled: " + getScheduled().toString();
+			string += "\t\tScheduled " + getScheduled().toString();
 		return string;
 	}
 

@@ -3,9 +3,9 @@ package it.unicam.cs.pa.jbudget104953.FXController;
 import java.util.ArrayList;
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagementInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerAccountInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerGroupInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerManagementInterface;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;

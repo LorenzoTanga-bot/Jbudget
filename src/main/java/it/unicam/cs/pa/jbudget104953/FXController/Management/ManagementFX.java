@@ -73,12 +73,15 @@ public class ManagementFX implements Initializable, EventListener {
         for (FinancialInterface financial : transaction) {
             balance += financial.getAmount();
             if (financial.getScheduled() != null)
-                series.getData().add(new XYChart.Data<>(financial.getScheduled().getDate().get(Calendar.DAY_OF_MONTH)
-                        + "/" + (financial.getScheduled().getDate().get(Calendar.MONTH)), balance));
+                series.getData()
+                        .add(new XYChart.Data<>(financial.getScheduled().getDate().get(Calendar.DAY_OF_MONTH) + "/"
+                                + (financial.getScheduled().getDate().get(Calendar.MONTH) + 1) + "/"
+                                + financial.getScheduled().getDate().get(Calendar.YEAR), balance));
             else
-                series.getData().add(new XYChart.Data<>(
-                        financial.getDate().get(Calendar.DAY_OF_MONTH) + "/" + financial.getDate().get(Calendar.MONTH),
-                        balance));
+                series.getData()
+                        .add(new XYChart.Data<>(financial.getDate().get(Calendar.DAY_OF_MONTH) + "/"
+                                + (financial.getDate().get(Calendar.MONTH) + 1) + "/"
+                                + financial.getDate().get(Calendar.YEAR), balance));
 
         }
         lcManagement.getData().removeAll(lcManagement.getData());

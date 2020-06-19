@@ -3,12 +3,12 @@ package it.unicam.cs.pa.jbudget104953.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccount;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroup;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerGroupInterface;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagement;
-import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManagementInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerAccount;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerAccountInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerGroup;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerGroupInterface;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerManagement;
+import it.unicam.cs.pa.jbudget104953.modelController.ControllerManagementInterface;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.Group;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;

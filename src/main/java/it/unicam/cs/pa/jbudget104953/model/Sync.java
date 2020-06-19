@@ -81,13 +81,16 @@ public class Sync implements SyncInterface {
         };
 
         if (scheduled[0].equals("null"))
-            return new Financial(ID, description, typeMovement, typePayment, amount, new GregorianCalendar(
-                    Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])), tagList, null);
+            return new Financial(ID, description, typeMovement, typePayment, amount,
+                    new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]) - 1,
+                            Integer.parseInt(date[0])),
+                    tagList, null);
 
         return new Financial(ID, description, typeMovement, typePayment, amount,
-                new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])),
+                new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]) - 1,
+                        Integer.parseInt(date[0])),
                 tagList, new Scheduled(new GregorianCalendar(Integer.parseInt(scheduled[2]),
-                        Integer.parseInt(scheduled[1]), Integer.parseInt(scheduled[0]))));
+                        Integer.parseInt(scheduled[1]) - 1, Integer.parseInt(scheduled[0]))));
     }
 
     private JSONObject writeMovement(MovementInterface movement) {
