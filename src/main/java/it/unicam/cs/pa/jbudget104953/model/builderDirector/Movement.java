@@ -45,6 +45,19 @@ public class Movement implements MovementInterface {
 	}
 
 	@Override
+	public ArrayList<FinancialInterface> getAllTransaction() {
+		return new ArrayList<FinancialInterface>() {
+			private static final long serialVersionUID = 1L;
+
+			{
+				add(getInitialTransaction());
+				if (typeMovement != TypeMovement.SINGLE)
+					addAll(getRelatedTransaction());
+			}
+		};
+	}
+
+	@Override
 	public TypeScope getTypeScope() {
 		return typeScope;
 	}
@@ -68,12 +81,14 @@ public class Movement implements MovementInterface {
 	public String toString() {
 
 		String string = "ID: " + getID() + "\tType: " + getType() + "\n" + "Inital Transaction: \n"
-				+ getInitialTransaction().toString() + "\n" + "Repayment Installments : \n";
-		if (relatedTransaction != null)
+				+ getInitialTransaction().toString() + "\n";
+		if (relatedTransaction != null) {
+			string += "Repayment Installments : \n";
 			for (FinancialInterface e : relatedTransaction)
 				string += "ID financial: " + e.getID() + "\t\tDate: "
 						+ (new SimpleDateFormat("dd-MM-yyyy").format(e.getDate().getTime())) + "\t\tAmount: "
 						+ e.getAmount() + "\n";
+		}
 
 		return string;
 	}

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.PopOver;
+
 import it.unicam.cs.pa.jbudget104953.FXController.FXSetter;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.EventListener;
@@ -17,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -51,8 +54,8 @@ public class AccountFX implements Initializable, EventListener {
                     protected void updateItem(ManagementInterface<?> management, boolean bln) {
                         super.updateItem(management, bln);
                         if (management != null) {
-                            setText("ID: " + management.getID() + "Name: " + management.getName() + "\nBalance: "
-                                    + management.getBalance() + "\tDescription: " + management.getDescription());
+                            setText("ID: " + management.getID() + "\tName: " + management.getName() + "\tBalance: "
+                                    + management.getBalance());
                         }
                     }
 
@@ -73,9 +76,27 @@ public class AccountFX implements Initializable, EventListener {
 
     }
 
+    private void popOver() {
+        if (listAccount.getSelectionModel().getSelectedItem() != null) {
+            FXSetter.getInstance().setControllerManagement(listAccount.getSelectionModel().getSelectedItem());
+            try {
+                VBox popUp = FXMLLoader.load(getClass().getResource("/Account/popOver.fxml"));
+                PopOver popOver = new PopOver(popUp);
+                popOver.show(listAccount);
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                popOver.setAutoFix(true);
+                popOver.setAutoHide(true);
+                popOver.setHideOnEscape(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void selectItem() {
         btnRemoveManagement.setDisable(false);
         btnViewManagement.setDisable(false);
+        popOver();
     }
 
     public void addManagement() {

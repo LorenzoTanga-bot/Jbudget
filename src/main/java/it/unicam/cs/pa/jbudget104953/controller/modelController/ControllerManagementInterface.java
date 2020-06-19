@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 
 public interface ControllerManagementInterface {
     /**
@@ -66,6 +68,29 @@ public interface ControllerManagementInterface {
     public boolean removeElement(int ID);
 
     /**
+     * restituisce la lista di tutti le transazioni (unione di initialTransaction e
+     * relatedTrnsaction)
+     * 
+     * @return transazioni
+     */
+    public ArrayList<FinancialInterface> getAllTransaction();
+
+    /**
+     * restituisce la lista di tutti le transazioni (unione di initialTransaction e
+     * relatedTrnsaction) filtrate secondo i tag passati come parametro
+     * 
+     * @return transazioni
+     */
+    public ArrayList<FinancialInterface> getAllTransactionFilterByTag(ArrayList<TagInterface> tagList);
+
+    /**
+     * restiuisce tutti gli elementi della collezione
+     * 
+     * @return tutti gli elementi della collezione
+     */
+    public ArrayList<Object> getAllElement();
+
+    /**
      * restituisce un elmento avente l'ID passato per parametro
      * 
      * @param ID id
@@ -74,6 +99,4 @@ public interface ControllerManagementInterface {
     public Object getElement(int ID);
 
     public String toString();
-
-    public ArrayList<Object> getAllElement();
 }

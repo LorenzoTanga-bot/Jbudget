@@ -91,14 +91,51 @@ public class AddDefaultElementFX implements Initializable, EventListener {
         btNext.setText("NEXT");
     }
 
+    private boolean getInput() {
+        if (!cbType.getSelectionModel().isEmpty() && !tfAmount.getText().isEmpty()
+                && !taDescription.getText().isEmpty()) {
+            FXSetter.getInstance().getInfo().put("TypeFinancial" + numberMovement,
+                    cbType.getSelectionModel().getSelectedItem().toString());
+            FXSetter.getInstance().getInfo().put("Amount" + numberMovement, tfAmount.getText());
+            FXSetter.getInstance().getInfo().put("Description" + numberMovement, taDescription.getText());
+            FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement, null);
+            if (rbScheduled.isSelected())
+                FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement,
+                        dateScheduled.getValue().getDayOfMonth() + "/" + dateScheduled.getValue().getMonthValue() + "/"
+                                + dateScheduled.getValue().getYear());
+
+            String IDtag = "";
+            for (TagInterface tag : ccbTag.getItems()) {
+                IDtag += tag.getID() + ",";
+            }
+            FXSetter.getInstance().getInfo().put("Tag" + numberMovement, IDtag);
+
+            return true;
+        }
+        return false;
+
+    }
+
     private void add() {
-        getInput();
-        FXSetter.getInstance().getControllerManagement().addElement(FXSetter.getInstance().getInfo());
-        FXSetter.getInstance().getPopUp().close();
+        if (getInput()) {
+            FXSetter.getInstance().getControllerManagement().addElement(FXSetter.getInstance().getInfo());
+            FXSetter.getInstance().getPopUp().close();
+        }
+
     }
 
     private void next() {
-
+        getInput();
+        FXSetter.getInstance().getPopUp().close();
+        FXSetter.getInstance().setPopUp(new Stage());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Management/AdditionalInformation.fxml"));
+        try {
+            FXSetter.getInstance().getPopUp().setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FXSetter.getInstance().getPopUp().setTitle("Add Element - Jbudget");
+        FXSetter.getInstance().getPopUp().show();
     }
 
     private void initButton() {
@@ -171,8 +208,9 @@ public class AddDefaultElementFX implements Initializable, EventListener {
             case "REPEATED":
                 initRepeated();
                 break;
-            case "LOAND":
+            case "LOAN":
                 initLoan();
+                break;
         }
         FXSetter.getInstance().getInfo().put("NumberMovement", "0");
         TagList.getInstance().subscribe(this);
@@ -191,23 +229,6 @@ public class AddDefaultElementFX implements Initializable, EventListener {
         }
         FXSetter.getInstance().getPopUpTag().setTitle("Add Tag - Jbudget");
         FXSetter.getInstance().getPopUpTag().show();
-    }
-
-    private void getInput() {
-        FXSetter.getInstance().getInfo().put("TypeFinancial" + numberMovement,
-                cbType.getSelectionModel().getSelectedItem().toString());
-        FXSetter.getInstance().getInfo().put("Amount" + numberMovement, tfAmount.getText());
-        FXSetter.getInstance().getInfo().put("Description" + numberMovement, taDescription.getText());
-        FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement, null);
-        if (rbScheduled.isSelected())
-            FXSetter.getInstance().getInfo().put("DateScheduled" + numberMovement,
-                    dateScheduled.getValue().getDayOfMonth() + "/" + dateScheduled.getValue().getMonthValue() + "/"
-                            + dateScheduled.getValue().getYear());
-        String IDtag = "";
-        for (TagInterface tag : ccbTag.getItems()) {
-            IDtag += tag.getID();
-        }
-        FXSetter.getInstance().getInfo().put("Tag" + numberMovement, IDtag);
     }
 
     private void resetInput() {

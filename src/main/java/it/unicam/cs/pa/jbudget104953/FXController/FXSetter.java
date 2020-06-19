@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.FXController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManage
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import javafx.stage.Stage;
 
 public class FXSetter implements FXSetterInterface {
@@ -24,6 +27,8 @@ public class FXSetter implements FXSetterInterface {
     private Stage popUp;
     private Stage popUpTag;
     private Map<String, String> info;
+    private MovementInterface movementSelected;
+    private ArrayList<TagInterface> tagForFilter;
 
     private FXSetter() {
         group = new ControllerGroup();
@@ -110,8 +115,34 @@ public class FXSetter implements FXSetterInterface {
     }
 
     @Override
-    public void setPopUpTag(Stage popUpTag) {
+    public boolean setPopUpTag(Stage popUpTag) {
         this.popUpTag = popUpTag;
+        return true;
+
+    }
+
+    @Override
+    public MovementInterface getMovementSelected() {
+        return movementSelected;
+    }
+
+    @Override
+    public boolean setMovementSelected(MovementInterface movementSelected) {
+        this.movementSelected = movementSelected;
+        return true;
+
+    }
+
+    @Override
+    public ArrayList<TagInterface> getTagForFilter() {
+        return tagForFilter;
+    }
+
+    @Override
+    public boolean setTagForFilter(ArrayList<TagInterface> tagForFilter) {
+        this.tagForFilter = tagForFilter;
+        return true;
+
     }
 
 }

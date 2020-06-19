@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.PopOver;
+
 import it.unicam.cs.pa.jbudget104953.FXController.FXSetter;
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.EventListener;
@@ -17,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -74,10 +77,27 @@ public class GroupFX implements Initializable, EventListener {
 
     }
 
+    private void popOver() {
+        if (listGroup.getSelectionModel().getSelectedItem() != null) {
+            FXSetter.getInstance().setControllerAccount(listGroup.getSelectionModel().getSelectedItem());
+            try {
+                VBox popUp = FXMLLoader.load(getClass().getResource("/Group/popOver.fxml"));
+                PopOver popOver = new PopOver(popUp);
+                popOver.show(listGroup);
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                popOver.setAutoFix(true);
+                popOver.setAutoHide(true);
+                popOver.setHideOnEscape(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void selectItem() {
         btnRemoveAccount.setDisable(false);
         btnViewAccount.setDisable(false);
-
+        popOver();
     }
 
     public void addAccount() {

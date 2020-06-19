@@ -34,11 +34,19 @@ public interface MovementInterface extends Comparable<MovementInterface> {
 	public FinancialInterface getInitialTransaction();
 
 	/**
-	 * restituisce la list delle rate di rimborso
+	 * restituisce la lista delle rate di rimborso
 	 * 
 	 * @return rate del rimborso
 	 */
 	public ArrayList<FinancialInterface> getRelatedTransaction();
+
+	/**
+	 * restituisce la lista di tutti le transazioni (unione di initialTransaction e
+	 * relatedTrnsaction)
+	 * 
+	 * @return transazioni
+	 */
+	public ArrayList<FinancialInterface> getAllTransaction();
 
 	/**
 	 * restituisce lo scopo della transazione (Consumer goods o Liquid assets)

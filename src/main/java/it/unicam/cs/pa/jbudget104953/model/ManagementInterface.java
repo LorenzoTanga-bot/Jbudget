@@ -1,6 +1,9 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
+
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
 
 public interface ManagementInterface<T> {
 
@@ -55,6 +58,22 @@ public interface ManagementInterface<T> {
 	 * @return tutti gli elementi della collezione
 	 */
 	public ArrayList<Object> getAllElement();
+
+	/**
+	 * restituisce la lista di tutti le transazioni (unione di initialTransaction e
+	 * relatedTrnsaction)
+	 * 
+	 * @return transazioni
+	 */
+	public ArrayList<FinancialInterface> getAllTransaction();
+
+	/**
+	 * restituisce la lista di tutti le transazioni (unione di initialTransaction e
+	 * relatedTrnsaction) filtrate secondo il predicato passato come parametro
+	 * 
+	 * @return transazioni
+	 */
+	public ArrayList<FinancialInterface> getAllTransaction(Predicate<FinancialInterface> predicate);
 
 	/**
 	 * restituisce il bilancio del gestore

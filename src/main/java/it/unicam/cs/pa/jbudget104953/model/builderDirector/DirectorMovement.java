@@ -36,6 +36,7 @@ public class DirectorMovement implements DirectorMovementInterface {
 		movementBuilder.setInitialTransaction(initialTransaction);
 		movementBuilder.setRelatedTransaction(repaymentInstallments);
 		movementBuilder.setTypeScope(TypeScope.CONSUMER_GOODS);
+		movementBuilder.setTypeMovement(TypeMovement.LOAN);
 		movementBuilder.setRatio(ratio);
 		return true;
 	}
@@ -48,6 +49,7 @@ public class DirectorMovement implements DirectorMovementInterface {
 		movementBuilder.setInitialTransaction(initialTransaction);
 		movementBuilder.setRelatedTransaction(repaymentInstallments);
 		movementBuilder.setTypeScope(TypeScope.LIQUID_ASSETS);
+		movementBuilder.setTypeMovement(TypeMovement.LOAN);
 		movementBuilder.setRatio(ratio);
 		return true;
 	}

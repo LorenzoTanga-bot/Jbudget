@@ -1,8 +1,11 @@
 package it.unicam.cs.pa.jbudget104953.model;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
 
 public class ManagementMovement implements ManagementInterface<MovementInterface> {
@@ -76,6 +79,24 @@ public class ManagementMovement implements ManagementInterface<MovementInterface
 				}
 			}
 		};
+	}
+
+	@Override
+	public ArrayList<FinancialInterface> getAllTransaction() {
+		return new ArrayList<>() {
+			private static final long serialVersionUID = 1L;
+
+			{
+				for (MovementInterface movement : movementArray) {
+					addAll(movement.getAllTransaction());
+				}
+			}
+		};
+	}
+
+	@Override
+	public ArrayList<FinancialInterface> getAllTransaction(Predicate<FinancialInterface> predicate) {
+		return getAllTransaction().parallelStream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@Override

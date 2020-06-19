@@ -175,7 +175,7 @@ public class ControllerManagement implements ControllerManagementInterface {
     private ArrayList<FinancialInterface> makeRepaymentTransaction(FinancialInterface initialTransaction,
             Map<String, String> info) {
 
-        int numRate = Integer.parseInt(info.get("NumberRate"));
+        int numRate = Integer.parseInt(info.get("NumberMovement"));
         int day;
         if (info.get("Day") != null)
             day = Integer.parseInt(info.get("Day"));
@@ -228,6 +228,16 @@ public class ControllerManagement implements ControllerManagementInterface {
     @Override
     public Object getElement(int ID) {
         return management.getElement(ID);
+    }
+
+    @Override
+    public ArrayList<FinancialInterface> getAllTransaction() {
+        return management.getAllTransaction();
+    }
+
+    @Override
+    public ArrayList<FinancialInterface> getAllTransactionFilterByTag(ArrayList<TagInterface> tagList) {
+        return management.getAllTransaction(x -> x.getTag().containsAll(tagList));
     }
 
     @Override

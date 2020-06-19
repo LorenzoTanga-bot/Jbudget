@@ -37,3 +37,59 @@
   -fx-background-color: #087ca7;
   -fx-text-fill: #ffffff;
 }
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .corner {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button {
+  visibility: hidden;
+}
+
+.scroll-bar .decrement-button {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+  -fx-background-color: #087ca7;
+}
+
+.chart {
+  -fx-background-color: #087ca7;
+  -fx-legend-visible: false;
+}
+
+.chart-plot-background {
+  -fx-background-color: transparent;
+}
+
+.chart-series-line {
+  -fx-stroke: #033860;
+}
+
+.chart-line-symbol {
+  -fx-background-color: #033860, #087ca7;
+}
+
+.axis {
+  -fx-tick-label-fill: #ffffff;
+}

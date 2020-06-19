@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget104953.FXController;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerAccountInterface;
@@ -8,6 +9,8 @@ import it.unicam.cs.pa.jbudget104953.controller.modelController.ControllerManage
 import it.unicam.cs.pa.jbudget104953.model.AccountInterface;
 import it.unicam.cs.pa.jbudget104953.model.GroupInterface;
 import it.unicam.cs.pa.jbudget104953.model.ManagementInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
+import it.unicam.cs.pa.jbudget104953.model.builderDirector.TagInterface;
 import javafx.stage.Stage;
 
 public interface FXSetterInterface {
@@ -37,6 +40,14 @@ public interface FXSetterInterface {
 
     public Stage getPopUpTag();
 
-    public void setPopUpTag(Stage popUpTag);
+    public boolean setPopUpTag(Stage popUpTag);
+
+    public MovementInterface getMovementSelected();
+
+    public boolean setMovementSelected(MovementInterface movementSelected);
+
+    public ArrayList<TagInterface> getTagForFilter();
+
+    public boolean setTagForFilter(ArrayList<TagInterface> tagForFilter);
 
 }
