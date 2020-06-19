@@ -37,12 +37,14 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 		financialBuilder.setAmount(-1 * Math.abs(amount));
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
-		financialBuilder.setScheduled(new Scheduled(scheduled));
 		financialBuilder.setTypeMovement(TypeFinancial.EXPENSE);
-		if (scheduled == null)
+		if (scheduled == null) {
 			financialBuilder.setTypePayment(TypePayment.DEBIT);
-		else
+			financialBuilder.setScheduled(null);
+		} else {
 			financialBuilder.setTypePayment(TypePayment.CREDIT);
+			financialBuilder.setScheduled(new Scheduled(scheduled));
+		}
 		return true;
 	}
 
@@ -54,12 +56,14 @@ public class DirectorFinancial implements DirectorFinancialInterface {
 		financialBuilder.setAmount(amount);
 		financialBuilder.setDate(date);
 		financialBuilder.setTag(tag);
-		financialBuilder.setScheduled(null);
 		financialBuilder.setTypeMovement(TypeFinancial.REVENUE);
-		if (scheduled == null)
+		if (scheduled == null) {
 			financialBuilder.setTypePayment(TypePayment.DEBIT);
-		else
+			financialBuilder.setScheduled(null);
+		} else {
 			financialBuilder.setTypePayment(TypePayment.CREDIT);
+			financialBuilder.setScheduled(new Scheduled(scheduled));
+		}
 		return true;
 	}
 

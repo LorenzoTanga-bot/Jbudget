@@ -2,7 +2,9 @@ package it.unicam.cs.pa.jbudget104953.FXController.Management;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.PopOver;
@@ -21,14 +23,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ManagementFX implements Initializable, EventListener {
 
     @FXML
-    ListView<MovementInterface> listManagement;
+    Pane pListView;
 
     @FXML
     LineChart<String, Double> lcManagement;
@@ -51,28 +56,32 @@ public class ManagementFX implements Initializable, EventListener {
     @FXML
     Button btnFilterElement;
 
-    private void updateLineChart() {
+    private ListView<MovementInterface> listManagement;
 
+    private ListView<FinancialInterface> listFinancial;
+
+    private ArrayList<FinancialInterface> transaction;
+
+    private PopOver popOver;
+
+    private void updateLineChart() {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
 
         double balance = 0;
-
-        for (FinancialInterface financial : FXSetter.getInstance().getControllerManagement().getAllTransaction()) {
+        Collections.sort(transaction);
+        for (FinancialInterface financial : transaction) {
             balance += financial.getAmount();
             if (financial.getScheduled() != null)
                 series.getData().add(new XYChart.Data<>(financial.getScheduled().getDate().get(Calendar.DAY_OF_MONTH)
-                        + "/" + (financial.getScheduled().getDate().get(Calendar.MONTH) + 1), balance));
+                        + "/" + (financial.getScheduled().getDate().get(Calendar.MONTH)), balance));
             else
-                series.getData().add(new XYChart.Data<>(financial.getDate().get(Calendar.DAY_OF_MONTH) + "/"
-                        + financial.getDate().get(Calendar.MONTH) + 1, balance));
+                series.getData().add(new XYChart.Data<>(
+                        financial.getDate().get(Calendar.DAY_OF_MONTH) + "/" + financial.getDate().get(Calendar.MONTH),
+                        balance));
 
         }
         lcManagement.getData().removeAll(lcManagement.getData());
         lcManagement.getData().add(series);
-    }
-
-    private void updatLineChartFilter() {
-
     }
 
     private void updateLabel() {
@@ -90,6 +99,27 @@ public class ManagementFX implements Initializable, EventListener {
         }
 
         listManagement.setItems(movementList);
+        listManagement.setCellFactory(new Callback<ListView<MovementInterface>, ListCell<MovementInterface>>() {
+
+            @Override
+            public ListCell<MovementInterface> call(ListView<MovementInterface> p) {
+
+                ListCell<MovementInterface> cell = new ListCell<MovementInterface>() {
+
+                    @Override
+                    protected void updateItem(MovementInterface movement, boolean bln) {
+                        super.updateItem(movement, bln);
+                        if (movement != null) {
+                            setText("ID: " + movement.getID() + "\tType: " + movement.getType() + "\tBalance: "
+                                    + movement.getBalance());
+                        }
+                    }
+
+                };
+
+                return cell;
+            }
+        });
     }
 
     private void updateView() {
@@ -111,7 +141,7 @@ public class ManagementFX implements Initializable, EventListener {
             FXSetter.getInstance().setMovementSelected(listManagement.getSelectionModel().getSelectedItem());
             try {
                 VBox popUp = FXMLLoader.load(getClass().getResource("/Management/popOver.fxml"));
-                PopOver popOver = new PopOver(popUp);
+                popOver = new PopOver(popUp);
                 popOver.show(listManagement);
                 popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                 popOver.setAutoFix(true);
@@ -147,9 +177,10 @@ public class ManagementFX implements Initializable, EventListener {
     }
 
     public void filterElement() {
+
         try {
             VBox popUp = FXMLLoader.load(getClass().getResource("/Management/filterPopFX.fxml"));
-            PopOver popOver = new PopOver(popUp);
+            popOver = new PopOver(popUp);
             popOver.show(btnFilterElement);
             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
             popOver.setAutoFix(true);
@@ -174,6 +205,8 @@ public class ManagementFX implements Initializable, EventListener {
 
     @Override
     public void update(Object object) {
+        if (object instanceof filterPopFX)
+            ;
         if (FXSetter.getInstance().getControllerManagement().getManagement().equals(object))
             updateView();
     }

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.controlsfx.control.CheckComboBox;
 
@@ -36,7 +37,8 @@ public class filterPopFX implements Initializable {
     }
 
     public void applay() {
-        FXSetter.getInstance().setTagForFilter((ArrayList<TagInterface>) ccbTag.getItems());
+        FXSetter.getInstance()
+                .setTagForFilter(ccbTag.getItems().stream().collect(Collectors.toCollection(ArrayList::new)));
 
     }
 

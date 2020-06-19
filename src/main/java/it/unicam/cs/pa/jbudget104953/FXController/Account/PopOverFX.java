@@ -32,7 +32,7 @@ public class PopOverFX implements Initializable {
         lName.setText("Name: " + FXSetter.getInstance().getControllerManagement().getName());
         lID.setText("ID: " + FXSetter.getInstance().getControllerManagement().getID());
         lBalance.setText("Balance: " + FXSetter.getInstance().getControllerManagement().getBalance());
-        lDescription.setText("Balance: " + FXSetter.getInstance().getControllerManagement().getDescription());
+        lDescription.setText("Description: " + FXSetter.getInstance().getControllerManagement().getDescription());
 
     }
 

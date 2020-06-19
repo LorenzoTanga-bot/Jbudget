@@ -27,6 +27,7 @@ public class Financial implements FinancialInterface {
 		this.amount = amount;
 		this.date = date;
 		this.tag = tag;
+		this.scheduled = scheduled;
 
 	}
 
@@ -137,8 +138,17 @@ public class Financial implements FinancialInterface {
 
 	@Override
 	public int compareTo(FinancialInterface o) {
-		int compareDate = date.compareTo(o.getDate());
-		int compareID = ((Integer) ID).compareTo((Integer) o.getID());
+		int compareDate;
+		int compareID = o.getID() - ID;
+
+		if (scheduled != null && o.getScheduled() != null)
+			compareDate = scheduled.getDate().compareTo(o.getScheduled().getDate());
+		else if (scheduled != null)
+			compareDate = scheduled.getDate().compareTo(o.getDate());
+		else if (o.getScheduled() != null)
+			compareDate = date.compareTo(o.getScheduled().getDate());
+		else
+			compareDate = date.compareTo(o.getDate());
 
 		if (compareDate != 0)
 			return compareDate;

@@ -55,8 +55,8 @@ public class GroupFX implements Initializable, EventListener {
                         super.updateItem(account, bln);
                         if (account != null) {
                             setText("ID: " + account.getID() + "\tName: " + account.getName() + " "
-                                    + account.getSurname() + "\nBalance outside " + account.getBalanceOutside()
-                                    + "\tBalance inside: " + account.getBalanceOutside());
+                                    + account.getSurname() + "\tBalance outside " + account.getBalanceOutside()
+                                    + "\tBalance inside: " + account.getBalanceInside());
                         }
                     }
 

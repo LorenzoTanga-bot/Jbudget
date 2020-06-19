@@ -6,10 +6,11 @@ import java.util.GregorianCalendar;
 public class Scheduled implements ScheduledInterface {
 
 	private GregorianCalendar date;
-	private boolean completed = false;
+	private boolean completed;
 
 	public Scheduled(GregorianCalendar date) {
 		this.date = date;
+		this.completed = false;
 	}
 
 	@Override
@@ -26,8 +27,7 @@ public class Scheduled implements ScheduledInterface {
 
 	@Override
 	public String toString() {
-		return "Date: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime())) + "\tCompleted:"
-				+ isCompleted();
+		return "Date: " + (new SimpleDateFormat("dd-MM-yyyy").format(getDate().getTime()));
 	}
 
 }
