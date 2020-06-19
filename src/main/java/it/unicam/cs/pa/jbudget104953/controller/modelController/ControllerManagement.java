@@ -1,7 +1,5 @@
 package it.unicam.cs.pa.jbudget104953.controller.modelController;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -19,7 +17,6 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 
 public class ControllerManagement implements ControllerManagementInterface {
     private ManagementInterface<?> management;
-    private LocalDate date;
 
     @Override
     public boolean setManagement(ManagementInterface<?> management) {
@@ -67,11 +64,6 @@ public class ControllerManagement implements ControllerManagementInterface {
             String[] _scheduled = info.get("DateScheduled").split("/");
             scheduled = new GregorianCalendar(Integer.parseInt(_scheduled[2]), Integer.parseInt(_scheduled[1]),
                     Integer.parseInt(_scheduled[0]));
-            /*
-             * date = LocalDate.of(Integer.parseInt(_scheduled[2]),
-             * Integer.parseInt(_scheduled[1]), Integer.parseInt(_scheduled[0])); scheduled
-             * = GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
-             */
 
         }
 

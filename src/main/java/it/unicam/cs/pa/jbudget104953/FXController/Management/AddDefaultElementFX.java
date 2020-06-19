@@ -105,7 +105,7 @@ public class AddDefaultElementFX implements Initializable, EventListener {
                                 + dateScheduled.getValue().getYear());
 
             String IDtag = "";
-            for (TagInterface tag : ccbTag.getItems()) {
+            for (TagInterface tag : ccbTag.getCheckModel().getCheckedItems()) {
                 IDtag += tag.getID() + ",";
             }
             FXSetter.getInstance().getInfo().put("Tag" + numberMovement, IDtag);

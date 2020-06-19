@@ -2,6 +2,7 @@ package it.unicam.cs.pa.jbudget104953.FXController.Management;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -15,6 +16,7 @@ import it.unicam.cs.pa.jbudget104953.model.builderDirector.FinancialInterface;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.MovementInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,7 +27,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -33,7 +36,7 @@ import javafx.util.Callback;
 public class ManagementFX implements Initializable, EventListener {
 
     @FXML
-    Pane pListView;
+    StackPane pListView;
 
     @FXML
     LineChart<String, Double> lcManagement;
@@ -58,11 +61,9 @@ public class ManagementFX implements Initializable, EventListener {
 
     private ListView<MovementInterface> listManagement;
 
-    private ListView<FinancialInterface> listFinancial;
+    private ListView<FinancialInterface> listMovement;
 
     private ArrayList<FinancialInterface> transaction;
-
-    private PopOver popOver;
 
     private void updateLineChart() {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
@@ -90,7 +91,7 @@ public class ManagementFX implements Initializable, EventListener {
         lDescription.setText("Description: " + FXSetter.getInstance().getControllerManagement().getDescription());
     }
 
-    private void updateListView() {
+    private ListView<MovementInterface> listViewMovement() {
         ObservableList<MovementInterface> movementList = FXCollections.observableArrayList();
 
         for (Object objMovement : FXSetter.getInstance().getControllerManagement().getAllElement()) {
@@ -98,7 +99,7 @@ public class ManagementFX implements Initializable, EventListener {
             movementList.add(movement);
         }
 
-        listManagement.setItems(movementList);
+        ListView<MovementInterface> listManagement = new ListView<>(movementList);
         listManagement.setCellFactory(new Callback<ListView<MovementInterface>, ListCell<MovementInterface>>() {
 
             @Override
@@ -111,7 +112,8 @@ public class ManagementFX implements Initializable, EventListener {
                         super.updateItem(movement, bln);
                         if (movement != null) {
                             setText("ID: " + movement.getID() + "\tType: " + movement.getType() + "\tBalance: "
-                                    + movement.getBalance());
+                                    + movement.getBalance() + "\nTag: "
+                                    + movement.getInitialTransaction().getTag().toString());
                         }
                     }
 
@@ -120,10 +122,80 @@ public class ManagementFX implements Initializable, EventListener {
                 return cell;
             }
         });
+
+        listManagement.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (listManagement.getSelectionModel().getSelectedItem() != null) {
+                    btnRemoveMovement.setDisable(false);
+                    popOver();
+                } else
+                    btnRemoveMovement.setDisable(true);
+            }
+        });
+
+        return listManagement;
+    }
+
+    private ListView<FinancialInterface> listViewFinancial() {
+        ObservableList<FinancialInterface> financialList = FXCollections.observableArrayList();
+
+        for (FinancialInterface financial : transaction) {
+            financialList.add(financial);
+        }
+        ListView<FinancialInterface> listMovement = new ListView<>(financialList);
+        listMovement.setCellFactory(new Callback<ListView<FinancialInterface>, ListCell<FinancialInterface>>() {
+
+            @Override
+            public ListCell<FinancialInterface> call(ListView<FinancialInterface> p) {
+
+                ListCell<FinancialInterface> cell = new ListCell<FinancialInterface>() {
+
+                    @Override
+                    protected void updateItem(FinancialInterface financial, boolean bln) {
+                        super.updateItem(financial, bln);
+                        if (financial != null) {
+                            if (financial.getScheduled() == null)
+                                setText("ID: " + financial.getID() + "\tType: " + financial.getTypeFinancial()
+                                        + "\tAmount: " + financial.getAmount() + "\tDate: "
+                                        + (new SimpleDateFormat("dd-MM-yyyy").format(financial.getDate().getTime()))
+                                        + "\nPayment: " + financial.getTypePayment() + "\tTag: "
+                                        + financial.getTag().toString());
+                            else
+                                setText("ID: " + financial.getID() + "\tType: " + financial.getTypeFinancial()
+                                        + "\tAmount: " + financial.getAmount() + "\tDate Scheduled : "
+                                        + (new SimpleDateFormat("dd-MM-yyyy")
+                                                .format(financial.getScheduled().getDate().getTime()))
+                                        + "\nPayment: " + financial.getTypePayment() + "\tTag: "
+                                        + financial.getTag().toString());
+
+                        }
+                    }
+
+                };
+
+                return cell;
+            }
+        });
+        return listMovement;
     }
 
     private void updateView() {
-        updateListView();
+        pListView.getChildren().removeIf(x -> x.isVisible());
+        if (FXSetter.getInstance().getTagForFilter() == null) {
+            transaction = FXSetter.getInstance().getControllerManagement().getAllTransaction();
+            listManagement = listViewMovement();
+            listManagement.setPrefSize(580, 200);
+            pListView.getChildren().add(listManagement);
+            pListView.setPrefSize(580, 200);
+        } else {
+            transaction = FXSetter.getInstance().getControllerManagement()
+                    .getAllTransactionFilterByTag(FXSetter.getInstance().getTagForFilter());
+            listMovement = listViewFinancial();
+            listMovement.setPrefSize(580, 200);
+            pListView.getChildren().add(listMovement);
+        }
         updateLineChart();
         updateLabel();
     }
@@ -141,7 +213,7 @@ public class ManagementFX implements Initializable, EventListener {
             FXSetter.getInstance().setMovementSelected(listManagement.getSelectionModel().getSelectedItem());
             try {
                 VBox popUp = FXMLLoader.load(getClass().getResource("/Management/popOver.fxml"));
-                popOver = new PopOver(popUp);
+                PopOver popOver = new PopOver(popUp);
                 popOver.show(listManagement);
                 popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                 popOver.setAutoFix(true);
@@ -153,12 +225,8 @@ public class ManagementFX implements Initializable, EventListener {
         }
     }
 
-    public void selectItem() {
-        btnRemoveMovement.setDisable(false);
-        popOver();
-    }
-
     public void addElement() {
+        FXSetter.getInstance().setTagForFilter(null);
         FXSetter.getInstance().setPopUp(new Stage());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Management/SelectElementFX.fxml"));
         try {
@@ -179,8 +247,11 @@ public class ManagementFX implements Initializable, EventListener {
     public void filterElement() {
 
         try {
-            VBox popUp = FXMLLoader.load(getClass().getResource("/Management/filterPopFX.fxml"));
-            popOver = new PopOver(popUp);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Management/filterPopFX.fxml"));
+            VBox popUp = loader.load();
+            FilterPopFX filterPop = loader.<FilterPopFX>getController();
+            filterPop.subscribe(this);
+            PopOver popOver = new PopOver(popUp);
             popOver.show(btnFilterElement);
             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
             popOver.setAutoFix(true);
@@ -194,6 +265,7 @@ public class ManagementFX implements Initializable, EventListener {
     }
 
     public void goBack() {
+        FXSetter.getInstance().setTagForFilter(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Account/AccountFX.fxml"));
         try {
             FXSetter.getInstance().getStage().setScene(new Scene(loader.load()));
@@ -205,9 +277,8 @@ public class ManagementFX implements Initializable, EventListener {
 
     @Override
     public void update(Object object) {
-        if (object instanceof filterPopFX)
-            ;
-        if (FXSetter.getInstance().getControllerManagement().getManagement().equals(object))
+        if (object instanceof FilterPopFX
+                || FXSetter.getInstance().getControllerManagement().getManagement().equals(object))
             updateView();
     }
 
