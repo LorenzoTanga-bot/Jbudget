@@ -62,7 +62,7 @@ public interface BuilderMovementInterface {
      public boolean setRatio(double ratio);
 
      /**
-      * set delle transazioni di rimborso
+      * restituisci l'utlimo movimento creato
       * 
       * @return restituisce
       */

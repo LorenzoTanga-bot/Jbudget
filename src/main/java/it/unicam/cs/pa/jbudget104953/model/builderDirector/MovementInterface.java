@@ -13,7 +13,7 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 public interface MovementInterface extends Comparable<MovementInterface> {
 
 	/**
-	 * restituisce l'ID del prestito
+	 * restituisce l'ID del movimento
 	 * 
 	 * @return ID del prestito
 	 */
@@ -29,14 +29,14 @@ public interface MovementInterface extends Comparable<MovementInterface> {
 	/**
 	 * restituisce la transazione iniziale
 	 * 
-	 * @return movimento iniziale
+	 * @return transazione iniziale
 	 */
 	public FinancialInterface getInitialTransaction();
 
 	/**
-	 * restituisce la lista delle rate di rimborso
+	 * restituisce la lista delle transazioni esclula quella iniziale
 	 * 
-	 * @return rate del rimborso
+	 * @return lista delle transazioni
 	 */
 	public ArrayList<FinancialInterface> getRelatedTransaction();
 

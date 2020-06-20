@@ -7,30 +7,30 @@ import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeFinancial;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypePayment;
 
 /**
- * Questa interfaccia definisce un movimento.
+ * Questa interfaccia definisce ua transazione.
  * 
  * @author Lorenzo Tanganelli lorenzo.tanganelli@studenti.unicam.it
  */
 public interface FinancialInterface extends Comparable<FinancialInterface> {
 
 	/**
-	 * restituisce l'ID del movimento
+	 * restituisce l'ID della transazione
 	 * 
-	 * @return ID del movimento
+	 * @return ID della transazione
 	 */
 	public int getID();
 
 	/**
-	 * restituisce la descrizione del movimento
+	 * restituisce la descrizione della transazione
 	 * 
-	 * @return descrizione del movimento
+	 * @return descrizione della transazione
 	 */
 	public String getDescription();
 
 	/**
-	 * restituisce il tipo di movimento (Expense o Revenu)
+	 * restituisce il tipo di transazione (Expense o Revenu)
 	 * 
-	 * @return tipo di movimento
+	 * @return tipo di transazione
 	 */
 	public TypeFinancial getTypeFinancial();
 
@@ -49,9 +49,9 @@ public interface FinancialInterface extends Comparable<FinancialInterface> {
 	public double getAmount();
 
 	/**
-	 * restituisce la data di quanto viene creato il movimento
+	 * restituisce la data di quanto viene creata la transazione
 	 * 
-	 * @return descrizione del movimento
+	 * @return data di creazione
 	 */
 	public GregorianCalendar getDate();
 
