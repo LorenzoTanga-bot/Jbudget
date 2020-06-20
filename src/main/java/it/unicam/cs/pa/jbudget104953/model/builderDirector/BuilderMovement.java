@@ -2,7 +2,7 @@ package it.unicam.cs.pa.jbudget104953.model.builderDirector;
 
 import java.util.ArrayList;
 
-import it.unicam.cs.pa.jbudget104953.model.ID.IDLoan;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeMovement;
 import it.unicam.cs.pa.jbudget104953.model.enumerable.TypeScope;
 
@@ -66,7 +66,7 @@ public class BuilderMovement implements BuilderMovementInterface {
 	@Override
 	public MovementInterface getResutl() {
 		try {
-			return new Movement(IDLoan.getInstance().getID(), typeMovement, initialTransaction, relatedTransaction,
+			return new Movement(IDMovement.getInstance().getID(), typeMovement, initialTransaction, relatedTransaction,
 					typeScope, ratio);
 		} catch (Exception e) {
 			return null;

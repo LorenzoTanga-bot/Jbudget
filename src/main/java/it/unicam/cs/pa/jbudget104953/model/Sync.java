@@ -16,7 +16,7 @@ import org.json.JSONTokener;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDAccount;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDFinancial;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDGroup;
-import it.unicam.cs.pa.jbudget104953.model.ID.IDLoan;
+import it.unicam.cs.pa.jbudget104953.model.ID.IDMovement;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDManagement;
 import it.unicam.cs.pa.jbudget104953.model.ID.IDTag;
 import it.unicam.cs.pa.jbudget104953.model.builderDirector.Financial;
@@ -234,7 +234,7 @@ public class Sync implements SyncInterface {
         JSONObject jsonID = new JSONObject();
         jsonID.put("IDAccount", IDAccount.getInstance().getID());
         jsonID.put("IDFinancial", IDFinancial.getInstance().getID());
-        jsonID.put("IDLoan", IDLoan.getInstance().getID());
+        jsonID.put("IDLoan", IDMovement.getInstance().getID());
         jsonID.put("IDManagement", IDManagement.getInstance().getID());
         jsonID.put("IDGroup", IDGroup.getInstance().getID());
         jsonID.put("IDTag", IDTag.getInstance().getID());
@@ -245,7 +245,7 @@ public class Sync implements SyncInterface {
     private void readID(JSONObject jsonID) {
         IDAccount.getInstance().setID(jsonID.getInt("IDAccount"));
         IDFinancial.getInstance().setID(jsonID.getInt("IDFinancial"));
-        IDLoan.getInstance().setID(jsonID.getInt("IDLoan"));
+        IDMovement.getInstance().setID(jsonID.getInt("IDLoan"));
         IDManagement.getInstance().setID(jsonID.getInt("IDManagement"));
         IDGroup.getInstance().setID(jsonID.getInt("IDGroup"));
         IDTag.getInstance().setID(jsonID.getInt("IDTag"));
